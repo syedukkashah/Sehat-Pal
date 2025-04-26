@@ -1,40 +1,71 @@
+/*-----------------------------------------
+  Theme Variables (light & dark)
+-----------------------------------------*/
+:root {
+    --bg-body: rgb(240, 243, 189);
+    --font-color: #000000;
+    --border-color: #000000;
+    --plain-bg: #ffffff;
+    --bg1: url('imgs/BG1-Light.png');
+    --overlay-color: #f0f3bd;
+    --overlay-opacity: 0.4;
+}
+
+body.dark-mode {
+    --bg-body: #121212;
+    --font-color: #ffffff;
+    --border-color: #ffffff;
+    --plain-bg: #000000;
+    --bg1: url('imgs/BG1-Dark.png');
+    --overlay-color: #000000;
+    --overlay-opacity: 0.4;
+}
+
+/*-----------------------------------------
+  Font-face & Body Background
+-----------------------------------------*/
 @font-face {
     font-family: 'Thunder LC', sans-serif;
     src: url('fonts/Thunder-LC.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
-/* General styles */
 body {
     font-family: 'Darker Grotesque', sans-serif;
-    background: rgb(240, 243, 189);
+    background: var(--bg-body);
 }
 
+/*-----------------------------------------
+  Welcome section
+-----------------------------------------*/
 .welcome-title {
     font-family: 'Thunder LC', sans-serif;
     font-size: 6.3rem;
-    color: black;
+    color: var(--font-color);
 }
-
 .welcome-subtitle {
     font-family: 'Thunder LC', sans-serif;
-    color: black;
+    color: var(--font-color);
     font-size: 2rem;
     display: flex;
     justify-content: center;
 }
 
+/*-----------------------------------------
+  Sign-in Section Padding
+-----------------------------------------*/
 .signin-sec {
     padding-top: 8%;
     padding-bottom: 10%;
 }
 
+/*-----------------------------------------
+  Parallax Background Section
+-----------------------------------------*/
 .signin-page {
     position: relative;
-    background-image: url('imgs/BG1-Light.png');
+    background-image: var(--bg1);
     background-attachment: fixed;
-    /* This creates the parallax effect */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -46,11 +77,8 @@ body {
     text-align: center;
     padding: 2rem;
     overflow: hidden;
-    /* makes sure overlay doesn't spill */
     z-index: 1;
 }
-
-/* Overlay */
 .signin-page::before {
     content: '';
     position: absolute;
@@ -58,224 +86,156 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
-    opacity: 0.4;
-    /* adjust for more/less transparency */
+    background-color: var(--overlay-color);
+    opacity: var(--overlay-opacity);
     z-index: 2;
 }
-
-/* Keep content above the overlay */
-.signin-page>* {
+.signin-page > * {
     position: relative;
     z-index: 3;
 }
 
-/* Container */
+/*-----------------------------------------
+  Login Container & Header
+-----------------------------------------*/
 .login-container {
     max-width: 450px;
     margin: 3rem auto;
-    background: rgb(240, 243, 189);
-    border: 1px solid #000;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
-
-/* Header */
 .login-container .login-title {
     font-family: 'Thunder LC', sans-serif;
     font-size: 2rem;
     text-transform: capitalize;
     text-align: center;
     padding: 1rem;
-    border-bottom: 1px solid #000;
-    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--plain-bg);
     margin: 0;
+    color: var(--font-color);
 }
 
-/* Inputs */
+/*-----------------------------------------
+  Form Controls & Buttons
+-----------------------------------------*/
 .login-container .form-control {
-    border: 1px solid #000;
+    border: 1px solid var(--border-color);
     border-radius: 0;
-    background: #fff;
+    background: #ffffff;
     font-family: 'Darker Grotesque', sans-serif;
     font-size: 1.25rem;
+    color: black;
 }
-
 .login-container .form-control:focus {
     box-shadow: none;
-    border-color: #000;
+    border-color: var(--border-color);
 }
 
-/* Primary Login Button */
 .btn-login {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.5rem;
-    background: #000000;
-    color: #fff;
-    border: solid 1px black;
+    background: var(--border-color);
+    color: var(--plain-bg);
+    border: solid 1px var(--border-color);
     border-radius: 0;
     padding: 0.5rem 1rem;
     width: 75%;
 }
-
 .btn-login:hover {
-    background: white;
-    border: solid 1px black;
+    background: var(--plain-bg);
+    color: var(--font-color);
+    border: solid 1px var(--border-color);
 }
 
-/* Links below button */
+/*-----------------------------------------
+  Links Below Button
+-----------------------------------------*/
 .login-container .link-row {
     font-family: 'Darker Grotesque', sans-serif;
     font-size: 1.25rem;
     text-align: center;
+    color: var(--font-color);
 }
-
 .login-container .link-row a {
     text-decoration: none;
-    color: #000;
+    color: var(--font-color);
 }
-
 .login-container .link-row a:hover {
     text-decoration: underline;
 }
 
-/* OR Separator
-  .separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 1rem 0;
-    font-family: 'Darker Grotesque', sans-serif;
-  }
-  .separator::before,
-  .separator::after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #000;
-  }
-  .separator::before {
-    margin-right: 0.5em;
-  }
-  .separator::after {
-    margin-left: 0.5em;
-  } */
-
+/*-----------------------------------------
+  Separator Styling
+-----------------------------------------*/
 .separator {
     display: flex;
     align-items: center;
     text-align: center;
     margin: 1.5rem 0;
     font-family: 'Darker Grotesque', sans-serif;
+    color: var(--font-color);
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .separator span {
     padding: 0 0.75rem;
-    /* space around "OR" */
-    background: rgb(240, 243, 189);
-    /* match your form background */
+    background: var(--bg-body);
     z-index: 1;
-    /* sit above the lines */
 }
-
 .separator::before,
 .separator::after {
     content: "";
     flex: 1;
     height: 1px;
-    background: #000;
+    background: var(--border-color);
 }
+.separator::before { margin-right: 0.5rem; }
+.separator::after  { margin-left: 0.5rem; }
 
-/* Optional tweak: add a little side-gap */
-.separator::before {
-    margin-right: 0.5rem;
-}
-
-.separator::after {
-    margin-left: 0.5rem;
-}
-
-/* Google Button */
-.btn-google {
-    display: flex;
-    align-items: center;
-    /* vertical center */
-    justify-content: center;
-    /* horizontal center */
-    line-height: 1;
-    /* reset any inherited line‐height */
-
-    border: 1px solid #000;
-    border-radius: 0;
-    background: white;
-    color: black;
-    font-family: 'Darker Grotesque', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 450;
-    padding: 0.75rem;
-    width: 100%;
-
-    transition: background-color 0.2s ease;
-}
-
-/* PNG Icon inside the button */
-.btn-google img {
-    display: block;
-    /* make it a block‐level flex child */
-    width: 1.5rem;
-    /* match the font-size */
-    height: 1.5rem;
-    object-fit: contain;
-    /* preserve aspect */
-    margin-right: 0.75rem;
-    /* gap to the text */
-}
-
-.btn-google:hover {
-    background: black;
-    color: white;
-    border: solid 1px black;
-}
-
-/* Guest Button */
+/*-----------------------------------------
+  Social & Guest Buttons
+-----------------------------------------*/
+.btn-google,
 .btn-guest {
     display: flex;
     align-items: center;
-    /* vertical center */
     justify-content: center;
-    /* horizontal center */
     line-height: 1;
-    /* reset any inherited line‐height */
-
-    border: 1px solid #000;
+    border: 1px solid var(--border-color);
     border-radius: 0;
-    background: white;
-    color: black;
+    background: var(--plain-bg);
+    color: var(--font-color);
     font-family: 'Darker Grotesque', sans-serif;
     font-size: 1.4rem;
     font-weight: 450;
     padding: 0.75rem;
     width: 100%;
-
     transition: background-color 0.2s ease;
 }
-
+.btn-google img,
+.btn-guest img {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    margin-right: 0.75rem;
+}
+.btn-google:hover,
 .btn-guest:hover {
-    background: black;
-    color: white;
-    border: solid 1px black;
+    background: var(--border-color);
+    color: var(--plain-bg);
+    border: solid 1px var(--border-color);
 }
 
-.link-row span {
-    font-weight: 600;
-}
-
+/*-----------------------------------------
+  Responsive Typography & Layout
+-----------------------------------------*/
 @media (max-width: 991px) {
     .welcome-title {
         padding-top: 10%;
         font-size: 5.5rem;
     }
-
     .welcome-subtitle {
         font-size: 2rem;
     }
@@ -286,7 +246,6 @@ body {
         padding-top: 10%;
         font-size: 4.5rem;
     }
-
     .welcome-subtitle {
         font-size: 1.75rem;
     }
@@ -297,86 +256,53 @@ body {
         padding-top: 5%;
         font-size: 3.5rem;
     }
-
     .welcome-subtitle {
         font-size: 1.25rem;
     }
-
     .login-container .login-title {
         font-size: 1.75rem;
     }
-
     .signin-page {
         height: auto;
-        /* if you still want it to fill when content is short */
     }
-
-    /* Give some breathing room before the footer */
     .login-container {
         margin: 2rem auto 2rem;
-        /* tweak as you like (1rem, 3rem, etc.) */
     }
 }
 
-
-
-/* Make the .form-check a flex row for perfect vertical alignment */
+/*-----------------------------------------
+  Custom Checkbox Styles
+-----------------------------------------*/
 .form-check {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem; /* same as .mb-3 */
-  }
-  
-  /* Restyle the native checkbox as a square box */
-  .form-check-input {
+    margin-bottom: 1rem;
+}
+.form-check-input {
     -webkit-appearance: none;
     appearance: none;
-    width: 1.25rem;         /* 20px */
-    height: 1.25rem;        /* 20px */
-    border: 1px solid #000; /* thick black outline */
-    border-radius: 0 !important;       /* no rounding */
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0 !important;
     background-color: transparent;
-    margin: 0;              /* remove default margins */
-    margin-right: 0.75rem;  /* gap before the label */
+    margin: 0;
+    margin-right: 0.75rem;
     position: relative;
     cursor: pointer;
     accent-color: tomato !important;
-  }
-  
-  /* When checked, fill the box (or you could draw a checkmark) */
-  .form-check-input:checked::before {
-    content: '';
-    position: absolute;
-    /*inset: 3px;             /* leave a little padding inside */
-    /* background-color: #000; */
-  }
-  
-  /* Label styling to match your design */
-  .form-check-label {
+}
+.form-check-input:checked::before {
+    /* keep default check styling */
+}
+.form-check-label {
     font-family: 'Darker Grotesque', sans-serif;
     font-size: 1.25rem;
-    color: #000;
-    margin: 0;              /* remove any default top/bottom margin */
-    cursor: pointer;        /* makes clicking the text toggle the box */
-  }
-
-  /* Remove the default blue outline on your custom checkbox */
-.form-check-input:focus {
-    outline: none;
-    box-shadow: none;
-  }
-  
-  /* If you also want to remove the focus ring on your “Save New Password” link/button */
-  .btn-login:focus {
-    outline: none;
-    box-shadow: none;
-  }
-
-  .form-check-input:focus-visible {
-    outline: 2px solid #000;
-  }
-  
-  .btn-login:focus-visible {
-    outline: 2px solid #000;
-  }
-  
+    color: var(--font-color);
+    margin: 0;
+    cursor: pointer;
+}
+.form-check-input:focus { outline: none; box-shadow: none; }
+.btn-login:focus { outline: none; box-shadow: none; }
+.form-check-input:focus-visible { outline: 2px solid var(--border-color); }
+.btn-login:focus-visible   { outline: 2px solid var(--border-color); }
