@@ -156,3 +156,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+// // script.js
+
+// // How long (in ms) the loader must stay visible at minimum
+// const MIN_DISPLAY_TIME = 3000; // 3 seconds
+
+// // Record when we started loading
+// const loadStart = Date.now();
+
+// window.addEventListener('load', () => {
+//   const pre    = document.getElementById('preloader');
+//   const main   = document.getElementById('main-content');
+
+//   // Calculate how much time has passed since we started
+//   const elapsed = Date.now() - loadStart;
+//   // Compute remaining time to reach MIN_DISPLAY_TIME
+//   const waitFor = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
+//   // Wait the remainder, then fade out
+//   setTimeout(() => {
+//     pre.classList.add('fade-out');
+
+//     // After the CSS fade-out (0.5s), remove the overlay and show content
+//     setTimeout(() => {
+//       pre.remove();
+//       main.classList.remove('hidden');
+//     }, 500);
+
+//   }, waitFor);
+// });
+
+// script.js
+
+const MIN_DISPLAY_TIME = 5000; // ms
+const startTime = Date.now();
+
+const pre    = document.getElementById('preloader');
+const main   = document.getElementById('main-content');
+const bar    = document.querySelector('.loading-progress');
+const status = document.querySelector('.loading-status');
+
+const statusPct = document.querySelector('.status-pct');
+
+// ❶ Kick off the progress updater
+function updateProgress() {
+  const elapsed = Date.now() - startTime;
+  const pct = Math.min(100, Math.floor((elapsed / MIN_DISPLAY_TIME) * 100));
+  bar.style.width = pct + '%';
+  statusPct.textContent = pct + '%';
+
+  if (elapsed < MIN_DISPLAY_TIME) {
+    requestAnimationFrame(updateProgress);
+  }
+}
+requestAnimationFrame(updateProgress);
+
+// ❷ When the page fully loads, ensure we're at 100%, then fade out
+window.addEventListener('load', () => {
+  // snap to full bar/text
+  bar.style.width = '100%';
+  statusPct.textContent = '100%';
+
+  const elapsed = Date.now() - startTime;
+  const waitFor = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
+  setTimeout(() => {
+    pre.classList.add('fade-out');
+    setTimeout(() => {
+      pre.remove();
+      main.classList.remove('hidden');
+    }, 600); // match your fade-out duration
+  }, waitFor);
+});
+

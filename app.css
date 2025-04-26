@@ -1639,3 +1639,102 @@ body {
         font-size: 1.25rem;
     }
 }
+
+:root {
+    /* Match this to your MIN_DISPLAY_TIME (e.g. 3000ms = 3s) */
+    --loader-duration: 5.25s;
+  }
+
+/* Hide real page until loader finishes */
+.hidden {
+    display: none;
+  }
+  
+  /* Status text styling */
+/* Status line spans exactly the bar’s width */
+.loading-status {
+    display: flex;
+    justify-content: space-between; /* push text to ends */
+    width: 100%;
+    max-width: 500px;               /* match your .loading-bar */
+    margin-bottom: 0.75rem;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.5rem;                /* adjust as needed */
+    color: #fff;
+  }
+
+  /* Full-screen preloader overlay */
+  #preloader {
+    position: fixed;
+    inset: 0;                 /* top/right/bottom/left = 0 */
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+
+    /* Add these: */
+    transform: translateY(0);
+    transition:
+        transform 0.6s ease,   /* slide */
+        opacity   2s ease;    /* fade */
+  }
+  
+  /* Bar track */
+  .loading-bar {
+    width: 100%;
+    max-width: 500px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 0px;
+    border: solid 1px #ffffff;
+    overflow: hidden;
+  }
+  
+  /* Animated progress */
+  .loading-progress {
+      width: 0;
+      height: 100%;
+      background: #a96cff;
+      animation: fillProgress var(--loader-duration) ease-in-out forwards;
+    }
+  
+  /* Slide-across keyframes */
+  @keyframes fillProgress {
+      from { width:  0;   }
+      to   { width:100%;  }
+    }
+  
+  /* Fade-out helper */
+  #preloader.fade-out {
+    opacity: 0;               
+    transform: translateY(100vh);
+  }
+  
+  @media (max-width: 767.98px) {
+    /* tighten up the overlay edges */
+    #preloader {
+      padding: 0 1rem;
+    }
+  
+    /* Status text: same max-width as the bar, centered */
+    .loading-status {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 350px;     /* match the bar below */
+      margin: 0 auto 0.5rem;/* auto-center + bottom gap */
+      font-size: 1.45rem;   /* your desired size */
+      color: #fff;
+    }
+  
+    /* Bar track: same centering & width */
+    .loading-bar {
+      width: 100%;
+      max-width: 350px;     /* match the status above */
+      height: 20px;
+      margin: 0 auto;       /* auto-center */
+    }
+  }
+  
