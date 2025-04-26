@@ -45,6 +45,28 @@ body {
     font-size: 1.5rem;
 }
 
+/* Slide-down fade-in for the navbar */
+/* .navbar.animate {
+    /* start hidden off-screen
+    opacity: 0;
+    transform: translateY(-100%);
+    /* animate into place
+    animation: slideDownFadeIn 0.8s ease-out forwards;
+}
+
+/* Keyframes for the slide + fade
+@keyframes slideDownFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
+
 /* Modal styling */
 .modal-content {
     border-radius: 0;
@@ -92,56 +114,125 @@ body {
     border-radius: 0 !important;
 }
 
+/* overlay sits underneath the bar but over everything else */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+    /* just below the bar */
+}
+
+/* when active, show the overlay */
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
 /* Search bar inside navbar */
 .search-bar-container {
-    position: absolute;
-    top: 48%;
+    position: fixed;
+    top: 150px;
     /* Start slightly above */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     width: 40%;
-    max-width: 300px;
-    background: #d3d3d3;
-    padding: 3px;
-    border-radius: 50px;
+    max-width: 500px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 0px;
+    border: solid 1px black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
     /* Transition Properties */
     opacity: 0;
     visibility: hidden;
-    transform: translate(-50%, -60%);
+    /* transform: translate(-50%, -60%); */
     /* Initially higher */
     transition: transform 0.4s ease-out, opacity 0.4s ease-out, visibility 0.4s ease-out;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
 }
 
 /* Style the input */
 .search-bar-container input {
-    width: 100%;
+    flex: 1;
     border: none;
     outline: none;
-    font-size: 1rem;
+    font-size: 1.25rem;
     background: transparent;
-    padding: 5px;
-    transition: all 0.3s ease-in-out;
 }
 
 /* Show search bar when active */
-.search-bar-container.active {
+/* .search-bar-container.active {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%);
-    /* Moves to the final position */
+} */
+
+/* when active, show it */
+.search-bar-container.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* the search button inside the bar */
+.search-submit {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    padding: 0 5px;
 }
 
 /* On smaller screens, move search bar to center of the page */
 @media (max-width: 768px) {
     .search-bar-container {
         position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
         width: 80%;
         max-width: 350px;
         padding: 10px;
-        z-index: 1000;
+        /*z-index: 1000; */
     }
 }
+
+/* Shake animation */
+@keyframes shake {
+    0% {
+        transform: translate(-50%, -50%) translateX(0);
+    }
+
+    25% {
+        transform: translate(-50%, -50%) translateX(-8px);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateX(8px);
+    }
+
+    75% {
+        transform: translate(-50%, -50%) translateX(-8px);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) translateX(0);
+    }
+}
+
+/* Apply shake */
+.shake {
+    animation: shake 0.4s ease;
+}
+
 
 @media (max-width: 450px) {
     .menu-item {
@@ -219,7 +310,16 @@ body {
     z-index: 3;
 }
 
+.section1 {
+    opacity: 0;
+    animation: fadeInSection 1s ease-in-out 0.3s forwards;
+}
 
+@keyframes fadeInSection {
+    to {
+        opacity: 1;
+    }
+}
 
 .hero-margin {
     /* margin-top: 140px;
@@ -1595,7 +1695,7 @@ body {
 }*/
 
 .footer {
-    background: #cca8ff;
+    background: #f2e8ff;
     border-top: solid 1px black;
     font-family: 'Thunder LC', sans-serif;
     /* padding-bottom: 1%; */
@@ -1643,30 +1743,34 @@ body {
 :root {
     /* Match this to your MIN_DISPLAY_TIME (e.g. 3000ms = 3s) */
     --loader-duration: 5.25s;
-  }
+}
 
 /* Hide real page until loader finishes */
 .hidden {
     display: none;
-  }
-  
-  /* Status text styling */
+}
+
+/* Status text styling */
 /* Status line spans exactly the bar’s width */
 .loading-status {
     display: flex;
-    justify-content: space-between; /* push text to ends */
+    justify-content: space-between;
+    /* push text to ends */
     width: 100%;
-    max-width: 500px;               /* match your .loading-bar */
+    max-width: 500px;
+    /* match your .loading-bar */
     margin-bottom: 0.75rem;
     font-family: 'Darker Grotesque', sans-serif;
-    font-size: 1.5rem;                /* adjust as needed */
+    font-size: 1.5rem;
+    /* adjust as needed */
     color: #fff;
-  }
+}
 
-  /* Full-screen preloader overlay */
-  #preloader {
+/* Full-screen preloader overlay */
+#preloader {
     position: fixed;
-    inset: 0;                 /* top/right/bottom/left = 0 */
+    inset: 0;
+    /* top/right/bottom/left = 0 */
     background: #000000;
     display: flex;
     flex-direction: column;
@@ -1677,12 +1781,14 @@ body {
     /* Add these: */
     transform: translateY(0);
     transition:
-        transform 0.6s ease,   /* slide */
-        opacity   2s ease;    /* fade */
-  }
-  
-  /* Bar track */
-  .loading-bar {
+        transform 0.6s ease,
+        /* slide */
+        opacity 2s ease;
+    /* fade */
+}
+
+/* Bar track */
+.loading-bar {
     width: 100%;
     max-width: 500px;
     height: 20px;
@@ -1690,51 +1796,61 @@ body {
     border-radius: 0px;
     border: solid 1px #ffffff;
     overflow: hidden;
-  }
-  
-  /* Animated progress */
-  .loading-progress {
-      width: 0;
-      height: 100%;
-      background: #a96cff;
-      animation: fillProgress var(--loader-duration) ease-in-out forwards;
+}
+
+/* Animated progress */
+.loading-progress {
+    width: 0;
+    height: 100%;
+    background: #a96cff;
+    animation: fillProgress var(--loader-duration) ease-in-out forwards;
+}
+
+/* Slide-across keyframes */
+@keyframes fillProgress {
+    from {
+        width: 0;
     }
-  
-  /* Slide-across keyframes */
-  @keyframes fillProgress {
-      from { width:  0;   }
-      to   { width:100%;  }
+
+    to {
+        width: 100%;
     }
-  
-  /* Fade-out helper */
-  #preloader.fade-out {
-    opacity: 0;               
+}
+
+/* Fade-out helper */
+#preloader.fade-out {
+    opacity: 0;
     transform: translateY(100vh);
-  }
-  
-  @media (max-width: 767.98px) {
+}
+
+@media (max-width: 767.98px) {
+
     /* tighten up the overlay edges */
     #preloader {
-      padding: 0 1rem;
+        padding: 0 1rem;
     }
-  
+
     /* Status text: same max-width as the bar, centered */
     .loading-status {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 350px;     /* match the bar below */
-      margin: 0 auto 0.5rem;/* auto-center + bottom gap */
-      font-size: 1.45rem;   /* your desired size */
-      color: #fff;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 350px;
+        /* match the bar below */
+        margin: 0 auto 0.5rem;
+        /* auto-center + bottom gap */
+        font-size: 1.45rem;
+        /* your desired size */
+        color: #fff;
     }
-  
+
     /* Bar track: same centering & width */
     .loading-bar {
-      width: 100%;
-      max-width: 350px;     /* match the status above */
-      height: 20px;
-      margin: 0 auto;       /* auto-center */
+        width: 100%;
+        max-width: 350px;
+        /* match the status above */
+        height: 20px;
+        margin: 0 auto;
+        /* auto-center */
     }
-  }
-  
+}

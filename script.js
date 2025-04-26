@@ -24,45 +24,115 @@
 //     }
 // });
 
-document.getElementById("searchIcon").addEventListener("click", function (event) {
-    event.preventDefault();
-    let searchBar = document.getElementById("searchBarContainer");
+// document.getElementById("searchIcon").addEventListener("click", function (event) {
+//     event.preventDefault();
+//     let searchBar = document.getElementById("searchBarContainer");
 
-    // Toggle 'active' class to trigger the slide-in effect
-    searchBar.classList.toggle("active");
+//     // Toggle 'active' class to trigger the slide-in effect
+//     searchBar.classList.toggle("active");
 
-    // Prevent the click from bubbling up (so it doesn't immediately close)
-    event.stopPropagation();
+//     // Prevent the click from bubbling up (so it doesn't immediately close)
+//     event.stopPropagation();
+// });
+
+// // Hide search bar when clicking outside
+// document.addEventListener("click", function (event) {
+//     let searchBar = document.getElementById("searchBarContainer");
+//     let searchIcon = document.getElementById("searchIcon");
+
+//     // If the click is NOT inside the search bar or on the search icon, hide it
+//     if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
+//         searchBar.classList.remove("active");
+//     }
+// });
+
+const searchIcon    = document.getElementById("searchIcon");
+const searchBarWrap = document.getElementById("searchBarContainer");
+const searchOverlay = document.getElementById("searchOverlay");
+const searchSubmit  = document.getElementById("searchSubmit");
+const searchBar     = document.getElementById("searchBar"); // you forgot to define this globally!
+
+// Helper function to close the search bar
+function closeSearchBar() {
+  searchBarWrap.classList.remove("active");
+  searchOverlay.classList.remove("active");
+}
+
+// Helper function to trigger shake animation
+function shakeSearchBar() {
+  searchBarWrap.classList.add("shake");
+  setTimeout(() => {
+    searchBarWrap.classList.remove("shake");
+  }, 400);
+}
+
+// Open/close on icon click
+searchIcon.addEventListener("click", e => {
+  e.preventDefault();
+  searchBarWrap.classList.toggle("active");
+  searchOverlay.classList.toggle("active");
+  e.stopPropagation();
 });
 
 // Hide search bar when clicking outside
 document.addEventListener("click", function (event) {
-    let searchBar = document.getElementById("searchBarContainer");
-    let searchIcon = document.getElementById("searchIcon");
+  const hasText = searchBar.value.trim().length > 0;
 
-    // If the click is NOT inside the search bar or on the search icon, hide it
-    if (!searchBar.contains(event.target) && !searchIcon.contains(event.target)) {
-        searchBar.classList.remove("active");
+  if (!searchBarWrap.contains(event.target) && !searchIcon.contains(event.target)) {
+    if (!hasText) {
+      closeSearchBar();
+    } else {
+      shakeSearchBar();
     }
+  }
+});
+
+// Hide search bar when pressing Escape key
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    const hasText = searchBar.value.trim().length > 0;
+
+    if (!hasText) {
+      closeSearchBar();
+    } else {
+      shakeSearchBar();
+    }
+  }
+});
+
+// Submit button behavior
+searchSubmit.addEventListener("click", e => {
+  e.preventDefault();
+  const query = searchBar.value.trim();
+
+  if (query) {
+    console.log("search for", query);
+    closeSearchBar();
+  } else {
+    shakeSearchBar();
+  }
 });
 
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
-    const button = document.querySelector(".custom-btn-3");
-    const arrow = document.querySelector(".arrow-icon");
+  const button = document.querySelector(".custom-btn-3");
+  const arrow = document.querySelector(".arrow-icon");
 
-    button.addEventListener("mousedown", function () {
-        arrow.style.transform = "translateX(10px)";
-        arrow.style.transition = "transform 0.2s ease-in-out";
-    });
+  button.addEventListener("mousedown", function () {
+    arrow.style.transform = "translateX(10px)";
+    arrow.style.transition = "transform 0.2s ease-in-out";
+  });
 
-    button.addEventListener("mouseup", function () {
-        arrow.style.transform = "translateX(0)";
-    });
+  button.addEventListener("mouseup", function () {
+    arrow.style.transform = "translateX(0)";
+  });
 
-    button.addEventListener("mouseleave", function () {
-        arrow.style.transform = "translateX(0)";
-    });
+  button.addEventListener("mouseleave", function () {
+    arrow.style.transform = "translateX(0)";
+  });
 });
 
 
@@ -84,10 +154,12 @@ const observer = new IntersectionObserver((entries) => {
 
 animatedElements.forEach(el => observer.observe(el));
 
+const animatedEls = document.querySelectorAll('.section1-content.animate');
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const historyPanel = document.getElementById('chatHistoryPanel');
-  const toggleBtn    = document.getElementById('toggleHistory');
+  const toggleBtn = document.getElementById('toggleHistory');
 
   toggleBtn.addEventListener('click', () => {
     const hidden = historyPanel.classList.toggle('collapsed');
@@ -128,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   // 1) Grab their email from ?email=... in the URL
   const params = new URLSearchParams(window.location.search);
-  const email  = params.get('email') || '';
+  const email = params.get('email') || '';
 
   // 2) Update the checkbox label
   const confirmLabel = document.getElementById('confirmEmailLabel');
@@ -193,9 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const MIN_DISPLAY_TIME = 5000; // ms
 const startTime = Date.now();
 
-const pre    = document.getElementById('preloader');
-const main   = document.getElementById('main-content');
-const bar    = document.querySelector('.loading-progress');
+const pre = document.getElementById('preloader');
+const main = document.getElementById('main-content');
+const bar = document.querySelector('.loading-progress');
 const status = document.querySelector('.loading-status');
 
 const statusPct = document.querySelector('.status-pct');
