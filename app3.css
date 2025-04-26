@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'Thunder LC', sans-serif;
+    src: url('fonts/Thunder-LC.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* General styles */
+body {
+    font-family: 'Darker Grotesque', sans-serif;
+    background: rgb(240, 243, 189);
+}
+
+.aboutus-title{
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 7.5rem;
+    color: black;
+}
+
+.para-box {
+    border: solid 1px black;
+    background-color: rgba(240, 243, 189, 0.5);
+}
+
+.aboutus-para{
+    font-size: 1.5rem;
+}
+
+.about-us-sec{
+    padding-top: 8%;
+    padding-bottom: 10%;
+}
+
+/* .aboutus-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 1rem;
+} */
+
+.aboutus-page {
+    position: relative;
+    background-image: url('imgs/BG1-Light.png');
+    background-attachment: fixed;
+    /* This creates the parallax effect */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+    /* makes sure overlay doesn't spill */
+    z-index: 1;
+}
+
+/* Overlay */
+.aboutus-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f3bd;
+    opacity: 0.4;
+    /* adjust for more/less transparency */
+    z-index: 2;
+}
+
+/* Keep content above the overlay */
+.aboutus-page>* {
+    position: relative;
+    z-index: 3;
+}
+
+@media (max-width: 768px){
+    .aboutus-title{
+        font-size: 5rem;
+    }
+
+    .aboutus-para{
+        font-size: 1rem;
+    }
+
+    .aboutus-page{
+        height: 75vh;
+    }
+}
