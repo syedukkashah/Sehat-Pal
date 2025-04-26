@@ -11,12 +11,42 @@
     /* --text-secondary: #4a4a4a; */
     --border-color: #000000;
     --border-color2: #ffffff;
-    --form-preview: rgba(0,0,0,0.7);
-    /* any others… */
+    --form-preview: rgba(0, 0, 0, 0.7);
+    --med-box-overlay: rgba(169, 108, 255, 0.1);
+    --bg-footer: #f2e8ff;
+    --footer-font-color: #000000;
+
+
+    --bg1: url('imgs/BG1-Light.png');
+    --bg2: url('imgs/BG2-Light.png');
+    --bg2-img: url('imgs/BG2-img-Light.png');
+    --bg3: url('imgs/BG3-Light.png');
+    --bg3-img: url('imgs/BG3-img-Light.png');
+    --bg4: url('imgs/BG4-Light.png');
+    --bg4-halfstar: url('imgs/BG4-star-Light.png');
+    --bg4-star: url('imgs/BG4-star-Light-2.png');
+    --bg5: url('imgs/BG5-Light.png');
+    --bg6: url('imgs/BG6-Light.png');
+    /* --logo: url('imgs/sehatpal - logo - black.png'); */
+
+    --arrow-default: invert(0);
+    --arrow-hover:   invert(1);
+}
+
+.logo-dark {
+    display: none;
+}
+
+body.dark-mode .logo-light {
+    display: none;
+}
+
+body.dark-mode .logo-dark {
+    display: inline-block;
 }
 
 body.dark-mode {
-    --bg-primary: #121212;
+    --bg-primary: rgba(0, 0, 0, 0.5);
     /* --bg-secondary: #1e1e1e; */
     --plain1-color: #000000;
     --plain2-color: #ffffff;
@@ -25,7 +55,27 @@ body.dark-mode {
     /* --text-secondary: #bbbbbb; */
     --border-color: #ffffff;
     --border-color2: #000000;
-    --form-preview: rgba(255,255,255,0.7);
+    --form-preview: rgba(255, 255, 255, 0.7);
+    --bg-50-opacity: rgba(0, 0, 0, 0.5);
+    --bg-85-opacity: rgba(0, 0, 0, 0.5);
+    --med-box-overlay: rgba(0, 0, 0, 0.2);
+    --bg-footer: #2a104b;
+    --footer-font-color: #ffffff;
+
+    --bg1: url('imgs/BG1-Dark.png');
+    --bg2: url('imgs/BG2-Dark.png');
+    --bg2-img: url('imgs/BG2-img-Dark.png');
+    --bg3: url('imgs/BG3-Dark.png');
+    --bg3-img: url('imgs/BG3-img-Dark.png');
+    --bg4: url('imgs/BG4-Dark.png');
+    --bg4-halfstar: url('imgs/BG4-star-Dark.png');
+    --bg4-star: url('imgs/BG4-star-Dark-2.png');
+    --bg5: url('imgs/BG5-Dark.png');
+    --bg6: url('imgs/BG6-Dark.png');
+    /* --logo: url('imgs/sehatpal - logo - white.png'); */
+
+    --arrow-default: invert(1);
+    --arrow-hover:   invert(0);
 }
 
 @font-face {
@@ -76,8 +126,10 @@ body {
 /* 1) Position the container under your fixed navbar */
 .mode-toggle-fixed {
     position: fixed;
-    top: 7rem;        /* Adjusted based on navbar height */
-    right: 1rem;      /* Align with navbar icons */
+    top: 7rem;
+    /* Adjusted based on navbar height */
+    right: 1rem;
+    /* Align with navbar icons */
     z-index: 1030;
     display: flex;
     align-items: center;
@@ -150,18 +202,20 @@ body {
 }
 
 /* 7) Dim inactive icon and set active icon to black */
-.mode-toggle-fixed input:checked + label .day {
+.mode-toggle-fixed input:checked+label .day {
     color: rgba(255, 255, 255, 0.4);
 }
-.mode-toggle-fixed input:not(:checked) + label .night {
+
+.mode-toggle-fixed input:not(:checked)+label .night {
     color: rgba(255, 255, 255, 0.4);
 }
 
 /* Active icon color */
-.mode-toggle-fixed input:not(:checked) + label .day {
+.mode-toggle-fixed input:not(:checked)+label .day {
     color: black;
 }
-.mode-toggle-fixed input:checked + label .night {
+
+.mode-toggle-fixed input:checked+label .night {
     color: black;
 }
 
@@ -349,7 +403,7 @@ body {
 
 .section1 {
     position: relative;
-    background-image: url('imgs/BG5-Light.png');
+    background-image: var(--bg5);
     background-attachment: fixed;
     /* This creates the parallax effect */
     background-size: cover;
@@ -491,10 +545,17 @@ body {
     }
 }
 
+@media (max-width: 991px) {
+    /* Adjust the breakpoint as needed */
+    .logo-light, .logo-dark {
+        display: none !important;
+    }
+}
+
 
 .section2 {
     position: relative;
-    background-image: url('imgs/BG4-Light.png');
+    background-image: var(--bg4);
     /* background-attachment: fixed; */
     background-size: cover;
     background-position: center;
@@ -711,7 +772,7 @@ body {
 
 .med-box {
     border: 1px solid var(--border-color);
-    background-color: rgba(169, 108, 255, 0.1);
+    background-color: var(--med-box-overlay);
     margin: 5%;
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -727,7 +788,7 @@ body {
     font-family: 'Thunder LC', sans-serif;
     font-size: 2rem;
     padding: 1%;
-    border-bottom: 1px solid (--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .box-value {
@@ -876,7 +937,7 @@ body {
 .section3 {
     margin-top: -3px;
     position: relative;
-    background-image: url('imgs/BG2-img-Light.png');
+    background-image: var(--bg2-img);
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -917,7 +978,7 @@ body {
 .section4 {
     margin-top: -3px;
     position: relative;
-    background-image: url('imgs/BG4-star-Light.png');
+    background-image: var(--bg4-halfstar);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1009,6 +1070,15 @@ body {
     margin-left: 10px;
 }
 
+.custom-btn-3 .arrow-icon {
+    filter: var(--arrow-default);
+    /* transition: filter 0.2s ease; */
+}
+
+.custom-btn-3:hover .arrow-icon {
+    filter: var(--arrow-hover);
+}
+
 
 @media (max-width: 1199px) {
     .custom-btn-3 {
@@ -1084,7 +1154,7 @@ body {
 .section5 {
     margin-top: 0px;
     position: relative;
-    background-image: url('imgs/BG1-Light.png');
+    background-image: var(--bg1);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1253,7 +1323,7 @@ body {
 .section6 {
     margin-top: 0px;
     position: relative;
-    background-image: url('imgs/BG3-img-Light.png');
+    background-image: var(--bg3-img);
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -1383,7 +1453,7 @@ body {
 .section7 {
     margin-top: 0px;
     position: relative;
-    background-image: url('imgs/BG6-Light.png');
+    background-image: var(--bg6);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1592,32 +1662,34 @@ body {
 
 
 .footer {
-    background: #f2e8ff;
+    background: var(--bg-footer);
     border-top: solid 1px var(--plain2-color);
     font-family: 'Thunder LC', sans-serif;
     /* padding-bottom: 1%; */
 }
 
 .footer-title {
+    color: var(--footer-font-color);
     font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
 .social-links a,
 .legal-links a {
-    color: #000;
+    color: var(--footer-font-color);
     text-decoration: none;
     font-family: 'Darker Grotesque', sans-serif;
     font-size: 1.5rem;
 }
 
 .copyright {
+    color: var(--footer-font-color);
     padding-top: 1.5%;
     font-size: 1.5rem;
 }
 
 .brand-name {
-    color: red;
+    color: #a96cff;
     font-weight: bold;
 }
 
