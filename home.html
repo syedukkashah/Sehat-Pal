@@ -70,7 +70,8 @@
                 <div class="d-flex align-items-center gap-3">
                     <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                    <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                    <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>               
+                      
                     <!-- Hamburger Icon -->
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                         data-bs-target="#menuModal">
@@ -79,6 +80,16 @@
                 </div>
             </div>
         </nav>
+
+        <div class="mode-toggle-fixed">
+            <input type="checkbox" id="modeToggle" />
+            <label for="modeToggle">
+              <span class="toggle-track">
+                <span class="icon day"><i class="bi bi-sun-fill"></i></span>
+                <span class="icon night"><i class="bi bi-moon-fill"></i></span>
+              </span>
+            </label>
+        </div>
 
         <!-- Full-screen dark overlay -->
         <div id="searchOverlay" class="search-overlay"></div>

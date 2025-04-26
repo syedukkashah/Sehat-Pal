@@ -1,3 +1,33 @@
+:root {
+    /* colors */
+    --bg-primary: #f0f3bd;
+    --bg-50-opacity: rgba(240, 243, 189, 0.5);
+    --bg-85-opacity: rgba(240, 243, 189, 0.85);
+    --plain1-color: #ffffff;
+    --plain2-color: #000000;
+    --purple-accent: #a96cff;
+    /* --bg-secondary: #f8f9fa; */
+    --text-primary: #000000;
+    /* --text-secondary: #4a4a4a; */
+    --border-color: #000000;
+    --border-color2: #ffffff;
+    --form-preview: rgba(0,0,0,0.7);
+    /* any others… */
+}
+
+body.dark-mode {
+    --bg-primary: #121212;
+    /* --bg-secondary: #1e1e1e; */
+    --plain1-color: #000000;
+    --plain2-color: #ffffff;
+    --text-primary: #ffffff;
+    --purple-accent: #a96cff;
+    /* --text-secondary: #bbbbbb; */
+    --border-color: #ffffff;
+    --border-color2: #000000;
+    --form-preview: rgba(255,255,255,0.7);
+}
+
 @font-face {
     font-family: 'Thunder LC', sans-serif;
     src: url('fonts/Thunder-LC.woff2') format('woff2');
@@ -17,12 +47,10 @@
     transform: translateY(0);
 }
 
-
-
 /* General styles */
 body {
     font-family: 'Darker Grotesque', sans-serif;
-    background: #f0f3bd;
+    background: var(--bg-primary);
     padding-top: 80px;
 }
 
@@ -45,27 +73,99 @@ body {
     font-size: 1.5rem;
 }
 
-/* Slide-down fade-in for the navbar */
-/* .navbar.animate {
-    /* start hidden off-screen
-    opacity: 0;
-    transform: translateY(-100%);
-    /* animate into place
-    animation: slideDownFadeIn 0.8s ease-out forwards;
+/* 1) Position the container under your fixed navbar */
+.mode-toggle-fixed {
+    position: fixed;
+    top: 7rem;        /* Adjusted based on navbar height */
+    right: 1rem;      /* Align with navbar icons */
+    z-index: 1030;
+    display: flex;
+    align-items: center;
 }
 
-/* Keyframes for the slide + fade
-@keyframes slideDownFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
+/* Add responsive adjustment */
+/* @media (max-width: 768px) {
+    .mode-toggle-fixed {
+        top: 5rem;
+        right: 1rem;
     }
 } */
+
+/* 2) Hide the native checkbox */
+.mode-toggle-fixed input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 3) The outer pill track with white outline */
+.toggle-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60px;
+    /* pill width */
+    height: 32px;
+    /* pill height */
+    border: 2px solid white;
+    /* white outline */
+    border-radius: 16px;
+    /* half the height */
+    background: black;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+}
+
+/* 4) The sliding white “thumb” */
+.toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 4px);
+    /* half minus borders */
+    height: calc(100% - 4px);
+    background: white;
+    border-radius: 14px;
+    transition: transform 0.3s;
+}
+
+/* 5) Center both icons inside their half */
+.mode-toggle-fixed .icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    /* above the thumb */
+    color: white;
+    font-size: 1.2rem;
+}
+
+.mode-toggle-fixed input:checked+label .toggle-track::before {
+    transform: translateX(28px);
+}
+
+/* 7) Dim inactive icon and set active icon to black */
+.mode-toggle-fixed input:checked + label .day {
+    color: rgba(255, 255, 255, 0.4);
+}
+.mode-toggle-fixed input:not(:checked) + label .night {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Active icon color */
+.mode-toggle-fixed input:not(:checked) + label .day {
+    color: black;
+}
+.mode-toggle-fixed input:checked + label .night {
+    color: black;
+}
+
+
 
 /* Modal styling */
 .modal-content {
@@ -169,13 +269,6 @@ body {
     background: transparent;
 }
 
-/* Show search bar when active */
-/* .search-bar-container.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%);
-} */
-
 /* when active, show it */
 .search-bar-container.active {
     opacity: 1;
@@ -254,21 +347,6 @@ body {
     }
 }
 
-/* .section1 {
-    background-image: url('imgs/BG3-Light.png');
-    background-size: cover;         
-    background-position: center;    
-    background-repeat: no-repeat;   
-    width: 100%;
-    height: 70vh;                  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-    padding: 2rem;
-} */
-
 .section1 {
     position: relative;
     background-image: url('imgs/BG5-Light.png');
@@ -283,7 +361,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
+    color: var(--plain1-color);
     padding: 2rem;
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -298,7 +376,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.4;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -329,12 +407,12 @@ body {
 .hero-title {
     font-family: 'Thunder LC', sans-serif;
     font-size: 7.5rem;
-    color: black;
+    color: var(--plain2-color);
     /* background-color: black; */
 }
 
 .hero-sehat {
-    color: #a96cff;
+    color: var(--purple-accent);
 }
 
 .hero-section {
@@ -346,7 +424,7 @@ body {
 
 .hero-para {
     font-size: 1.25rem;
-    color: black;
+    color: var(--plain2-color);
     /* text-shadow: 0px 0px 10px black; */
     /* background-color: black; */
 }
@@ -390,24 +468,8 @@ body {
 }
 
 
-
-
-
-/* .hero-visual {
-    background-color: black;
-    border: 1px solid white;
-    border-radius: 0%;
-    margin-left: 12%;
-    margin-right: 12%;
-} */
-
-/*.hero-visual {
-    /* background: black; Keeps the black background
-    /*padding: 20px;  Adds spacing around the image
-}*/
-
 .hero-image {
-    border: 0px solid black;
+    border: 0px solid var(--border-color);
 
     max-width: 100%;
     /* Ensures responsiveness */
@@ -420,14 +482,6 @@ body {
     margin: 0 auto 0 10%;
 }
 
-/* .circle-visual {
-    margin-top: 100px;
-    margin-bottom: 50px;
-    display: block;
-    /* margin: 0 auto;
-    text-align: center;
-    background-color: pink;
-} */
 
 @media (max-width: 991px) {
 
@@ -466,7 +520,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.5;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -485,7 +539,7 @@ body {
     height: 400px;
     /* Set initial height */
     border-radius: 3%;
-    border: 0px solid black;
+    border: 0px solid var(--border-color);
     overflow: hidden;
     /* Ensure no overflow */
     display: flex;
@@ -524,13 +578,13 @@ body {
 .chatbot-title {
     font-family: 'Thunder LC', sans-serif;
     font-size: 5.3rem;
-    color: black;
+    color: var(--plain2-color);
     /* background-color: black; */
 }
 
 .chatbot-para {
     font-size: 1.25rem;
-    color: black;
+    color: var(--plain2-color);
     /* background-color: black; */
     margin-left: 15%;
 }
@@ -544,10 +598,10 @@ body {
 .custom-btn {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
-    background-color: white;
-    color: black;
+    background-color: var(--plain1-color);
+    color: var(--plain2-color);
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     padding-right: 5%;
     padding-left: 5%;
@@ -559,10 +613,10 @@ body {
 .custom-btn:hover {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
-    background-color: black;
-    color: white;
+    background-color: var(--plain2-color);
+    color: var(--plain1-color);
     border-radius: 0;
-    border: 1px solid white;
+    border: 1px solid var(--border-color2);
     box-shadow: none;
     padding-right: 5%;
     padding-left: 5%;
@@ -576,9 +630,9 @@ body {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
     background-color: rgb(218, 218, 218);
-    color: black;
+    color: var(--plain2-color);
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     padding-right: 5%;
     padding-left: 5%;
@@ -640,52 +694,6 @@ body {
 }
 
 
-
-
-
-
-/* Hide circle-visual on smaller screens
-@media (max-width: 768px) {
-    .circle-visual {
-        display: none;
-    }
-}
-
-/* Adjust button size for better usability on mobile 
-@media (max-width: 576px) {
-    .custom-btn {
-        font-size: 1.2rem; /* Reduce font size 
-        padding: 10px 20px; /* Adjust padding for touch-friendly interaction 
-    }
-}
-
-/* Scale down heading & paragraph for smaller screens 
-@media (max-width: 768px) {
-    .chatbot-title {
-        font-size: 3.8rem;
-    }
-
-    .chatbot-para {
-        font-size: 1rem;
-        margin-left: 5%; /* Reduce margin 
-        margin-right: 5%;
-    }
-}
-
-/* Further adjustments for very small screens 
-@media (max-width: 480px) {
-    .chatbot-title {
-        font-size: 2.8rem;
-    }
-
-    .custom-btn {
-        font-size: 1rem; /* Slightly smaller button text
-        padding: 8px 16px; /* Maintain clickability 
-    }
-}*/
-
-
-
 .medical-record-section {
     /* background-color: aquamarine; */
     /* margin-top: 0px; */
@@ -694,7 +702,7 @@ body {
 }
 
 .medical-record-title {
-    color: black;
+    color: var(--plain2-color);
     /* background-color: black; */
     font-family: 'Thunder LC', sans-serif;
     font-size: 5.3rem;
@@ -702,7 +710,7 @@ body {
 }
 
 .med-box {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     background-color: rgba(169, 108, 255, 0.1);
     margin: 5%;
 
@@ -719,7 +727,7 @@ body {
     font-family: 'Thunder LC', sans-serif;
     font-size: 2rem;
     padding: 1%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid (--border-color);
 }
 
 .box-value {
@@ -737,7 +745,7 @@ body {
     font-size: 2rem;
     font-weight: normal;
     text-align: end;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -747,10 +755,10 @@ body {
 .custom-btn-2 {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
-    background-color: white;
-    color: black;
+    background-color: var(--plain1-color);
+    color: var(--plain2-color);
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     padding-right: 3%;
     padding-left: 3%;
@@ -762,10 +770,10 @@ body {
 .custom-btn-2:hover {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
-    background-color: black;
-    color: white;
+    background-color: var(--plain2-color);
+    color: var(--plain1-color);
     border-radius: 0;
-    border: 1px solid white;
+    border: 1px solid var(--border-color2);
     box-shadow: none;
     padding-right: 3%;
     padding-left: 3%;
@@ -779,9 +787,9 @@ body {
     font-family: 'Thunder LC', sans-serif;
     font-size: 1.65rem;
     background-color: rgb(218, 218, 218);
-    color: black;
+    color: var(--plain2-color);
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     padding-right: 3%;
     padding-left: 3%;
@@ -879,7 +887,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: left;
-    color: black;
+    color: var(--plain2-color);
     /* padding: 2rem; */
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -894,7 +902,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.6;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -919,7 +927,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: left;
-    color: black;
+    color: var(--plain2-color);
     /* padding: 2rem; */
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -927,16 +935,16 @@ body {
 }
 
 .call-ambulance-section {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     /* background-color: cadetblue; */
     /* padding-left: 5%; */
     padding-top: 2.5%;
     padding-bottom: 2.5%;
-    background-color: rgba(240, 243, 189, 0.85);
+    background-color: var(--bg-85-opacity);
 }
 
 .need-help {
-    color: black;
+    color: var(--plain2-color);
     /* background-color: black; */
     font-family: 'Thunder LC', sans-serif;
     font-size: 5.3rem;
@@ -951,10 +959,10 @@ body {
 
     font-family: 'Thunder LC', sans-serif;
     font-size: 4.3rem;
-    background-color: white;
-    color: black;
+    background-color: var(--plain1-color);
+    color: var(--plain2-color);
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     box-shadow: none;
     padding-left: -1%;
     padding-bottom: -1%;
@@ -963,68 +971,19 @@ body {
     font-weight: normal;
 }
 
-/* .custom-btn-3:hover {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    width: 100%;
-
-    font-family: 'Thunder LC', sans-serif;
-    font-size: 4rem;
-    background-color:black;
-    color: white;
-    border-radius: 0;
-    border: 1px solid white;
-    box-shadow: none;
-    padding-right: 30%;
-    padding-left: 3%;
-    padding-top: 0%;
-    padding-bottom: 0%;
-    font-weight: normal;
-} */
-
 .custom-btn-3:hover {
     font-family: 'Thunder LC', sans-serif;
     font-size: 4.3rem;
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: var(--plain2-color);
+    color: var(--plain1-color);
+    border: 1px solid var(--border-color2);
 }
 
-/* .custom-btn-3:active .arrow-icon {
-    transform: translateX(10px); 
-    transition: transform 0.1s ease-in-out;
-} */
 
 .arrow-icon.clicked {
     transform: translateX(10px);
     transition: transform 0.2s ease-in-out;
 }
-
-
-
-/* .custom-btn-3:active,
-.custom-btn-3:focus {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    /* width: 100%;
-
-    font-family: 'Thunder LC', sans-serif;
-    font-size: 4rem;
-    background-color:rgb(218, 218, 218);
-    color: black;
-    border-radius: 0;
-    border: 1px solid black;
-    box-shadow: none;
-    padding-right: 30%;
-    padding-left: 3%;
-    padding-top: 0%;
-    padding-bottom: 0%;
-    font-weight: normal;
-} */
 
 .custom-btn-3 span {
     flex-grow: 1;
@@ -1046,7 +1005,7 @@ body {
 .separator {
     flex-grow: 1;
     height: 2px;
-    background-color: black;
+    background-color: var(--plain2-color);
     margin-left: 10px;
 }
 
@@ -1135,7 +1094,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: left;
-    color: black;
+    color: var(--plain2-color);
     /* padding: 2rem; */
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -1150,7 +1109,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.4;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -1176,14 +1135,6 @@ body {
     /* padding-right: 5%; */
 }
 
-/*
-.mission-text {
-    border: 1px solid black;
-    /* margin-right: 5%;
-    margin-left: 5%;
-    padding: 1%;
-}*/
-
 .mission-img {
     width: 100%;
     height: auto;
@@ -1192,14 +1143,14 @@ body {
 }
 
 .right-mission-panel {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     padding: 2.6%;
     /* padding-bottom: 8%; */
     text-align: left;
     margin-right: 5%;
     display: flex;
     align-items: center;
-    background-color: rgba(240, 243, 189, 0.5);
+    background-color: var(--bg-50-opacity);
     /* 70% opacity */
 }
 
@@ -1313,7 +1264,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: left;
-    color: black;
+    color: var(--plain2-color);
     /* padding: 2rem; */
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -1328,7 +1279,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.4;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -1362,11 +1313,17 @@ body {
 
 .contact-form input,
 .contact-form textarea {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 0%;
     padding: 10px;
     font-size: 1.2rem;
-    background: white;
+    background: var(--plain1-color);
+    color: var(--text-primary);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--form-preview);
 }
 
 .contact-form button {
@@ -1374,8 +1331,8 @@ body {
     font-size: 1.5rem;
     width: 200px !important;
     margin: 0 auto;
-    background: black;
-    color: white;
+    background: var(--plain2-color);
+    color: var(--plain1-color);
     font-weight: bold;
     border: none;
     border-radius: 0%;
@@ -1436,7 +1393,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: left;
-    color: black;
+    color: var(--plain2-color);
     /* padding: 2rem; */
     overflow: hidden;
     /* makes sure overlay doesn't spill */
@@ -1451,7 +1408,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f3bd;
+    background-color: var(--bg-primary);
     opacity: 0.3;
     /* adjust for more/less transparency */
     z-index: 2;
@@ -1492,7 +1449,7 @@ body {
     font-size: 2rem;
     font-weight: medium;
     text-align: end;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--plain2-color);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1634,69 +1591,9 @@ body {
 }
 
 
-/*
-.footer {
-    background: #d3d3d3;
-    padding-top: 3%;
-    /* padding-bottom: 3%;
-    font-family: 'Thunder LC', sans-serif;
-}
-
-.footer-title-social {
-    font-weight: medium;
-    font-size: 2.5rem;
-    /* margin-bottom: 10px;
-    margin-right: 5%;
-    /* background-color: aqua;
-}
-
-.footer-title-legal {
-    font-weight: medium;
-    font-size: 2.5rem;
-    /* margin-bottom: 10px;
-    margin-left: 15%;
-    /* background-color: aqua;
-}
-
-
-.social-links a {
-    display: inline-block;
-    padding-right: 5%;
-    color: black;
-    text-decoration: none;
-    font-family: 'Darker Grotesque', sans-serif;
-    font-size: 1.5rem;
-}
-
-.legal-links a {
-    display: inline-block;
-    padding-left: 15%;
-    color: black;
-    text-decoration: none;
-    font-family: 'Darker Grotesque', sans-serif;
-    font-size: 1.5rem;
-}
-
-
-.social-links i,
-.legal-links a:hover {
-    color: black;
-}
-
-.copyright {
-    font-size: 1.5rem;
-    padding-top: 5%;
-}
-
-.brand-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: red;
-}*/
-
 .footer {
     background: #f2e8ff;
-    border-top: solid 1px black;
+    border-top: solid 1px var(--plain2-color);
     font-family: 'Thunder LC', sans-serif;
     /* padding-bottom: 1%; */
 }

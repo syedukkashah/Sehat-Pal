@@ -46,11 +46,36 @@
 //     }
 // });
 
-const searchIcon    = document.getElementById("searchIcon");
+document.addEventListener("DOMContentLoaded", () => {
+  const checkbox = document.getElementById("modeToggle");
+  const body     = document.body;
+  const KEY      = "sehatpalDarkMode";
+
+  // Init from storage or system preference
+  const saved = localStorage.getItem(KEY);
+  const dark  = saved === "dark"
+              || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  if (dark) {
+    body.classList.add("dark-mode");
+    checkbox.checked = true;
+  }
+
+  // Toggle on click
+  checkbox.addEventListener("change", () => {
+    const isDark = checkbox.checked;
+    body.classList.toggle("dark-mode", isDark);
+    localStorage.setItem(KEY, isDark ? "dark" : "light");
+  });
+});
+
+
+
+
+const searchIcon = document.getElementById("searchIcon");
 const searchBarWrap = document.getElementById("searchBarContainer");
 const searchOverlay = document.getElementById("searchOverlay");
-const searchSubmit  = document.getElementById("searchSubmit");
-const searchBar     = document.getElementById("searchBar"); // you forgot to define this globally!
+const searchSubmit = document.getElementById("searchSubmit");
+const searchBar = document.getElementById("searchBar"); // you forgot to define this globally!
 
 // Helper function to close the search bar
 function closeSearchBar() {
