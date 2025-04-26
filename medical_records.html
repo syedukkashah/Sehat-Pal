@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app1.css">
+    <link rel="stylesheet" href="app2.css">
+
+    <!-- Font Awesome Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Your Medical Records</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-black fixed-top">
+        <div class="container">
+            <!-- Brand Name -->
+            <a class="navbar-brand" href="home.html"><img src="imgs/sehatpal - website logo - white.png" alt="SehatPal Logo"
+                    class="navbar-logo"></a>
+
+            <!-- Right-aligned Icons -->
+            <div class="d-flex align-items-center gap-3">
+                <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
+
+                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <!-- Hamburger Icon -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
+                    data-bs-target="#menuModal">
+                    <i class="bi bi-list text-white fs-3"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Full-screen dark overlay -->
+    <div id="searchOverlay" class="search-overlay"></div>
+
+    <!-- Search Bar -->
+    <div id="searchBarContainer" class="search-bar-container">
+        <input type="text" id="searchBar" placeholder="Search SehatPal…">
+        <button id="searchSubmit" class="search-submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+    <!-- Modal (Menu) -->
+    <div class="modal fade" id="menuModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-black text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title">navigate sehatpal - menu</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="menu-item">
+                        <a href="home.html" class="nav-link">home</a>
+                        <span>——</span>
+                        <a href="chatbot.html" class="nav-link">sehatpal - chatbot</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="#" class="nav-link">medical records</a>
+                        <span>——</span>
+                        <a href="aboutus.html" class="nav-link">about us</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="signin.html" class="nav-link">sign in/sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="sec1">
+        <section class="container chatbot-title-section">
+            <h3 class="text-center chatbot-page-title animate">welcome to ukkashah's medical records.</h3>
+        </section>
+    </section>
+
+
+    <section class="s1">
+        <div class="container info-wrapper">
+            <section class="information-box animate" id="personal-info">
+                <div class="info-header">
+                    <h2>Personal Information</h2>
+                    <button class="edit-btn" aria-label="Edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="info-grid">
+                    <div class="label">Full Name</div>
+                    <!-- <div class="value">User Full Name</div> -->
+                    <input type="text" class="info-input" value="User Full Name" readonly>
+
+                    <div class="label">Date of Birth</div>
+                    <!-- <div class="value">DD/MM/YYYY</div> -->
+                    <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
+
+                    <div class="label">Gender</div>
+                    <!-- <div class="value">Male / Female / Other</div> -->
+                    <input type="text" class="info-input" value="Male / Female / Other" readonly>
+
+                    <div class="label">Email Address</div>
+                    <!-- <div class="value">ibrahimjoharfarooqi@gmail.com</div> -->
+                    <input type="email" class="info-input" value="ibrahimjoharfarooqi@gmail.com" readonly>
+
+                    <div class="label">Physical Address</div>
+                    <!-- <div class="value">H#109 Downing Street, Illinois, USA</div> -->
+                    <input type="text" class="info-input" value="H#109 Downing Street, Illinois, USA" readonly>
+                </div>
+
+                <div class="info-footer">
+                    <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+
+
+            <!-- Medical Information -->
+            <section class="information-box animate" id="medical-info">
+                <div class="info-header">
+                <h2>Medical Information</h2>
+                <button class="edit-btn" aria-label="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                </div>
+                <div class="info-grid">
+                <div class="label">Vaccination History</div>
+                <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
+            
+                <div class="label">Chronic Illness</div>
+                <input type="text" class="info-input" value="Acute Achalasia" readonly>
+            
+                <div class="label">Past Surgeries (if any)</div>
+                <input type="text" class="info-input" value="Balloon Dilation" readonly>
+            
+                <div class="label">Current Medicines</div>
+                <input type="text" class="info-input" value="List of Medicines" readonly>
+            
+                <div class="label">Allergies</div>
+                <input type="text" class="info-input" value="List of Allergies" readonly>
+                </div>
+                <div class="info-footer">
+                <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+            
+            <!-- Lifestyle Information -->
+            <section class="information-box animate" id="lifestyle-info">
+                <div class="info-header">
+                <h2>Lifestyle Information</h2>
+                <button class="edit-btn" aria-label="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                </div>
+                <div class="info-grid">
+                <div class="label">Dietary Restrictions</div>
+                <input type="text" class="info-input" value="High Carbohydrates" readonly>
+            
+                <div class="label">Smoking Status</div>
+                <input type="text" class="info-input" value="Yes/No" readonly>
+            
+                <div class="label">Exercise Frequency</div>
+                <input type="text" class="info-input" value="5 times/week" readonly>
+            
+                <div class="label">Avg Alcohol Cons.</div>
+                <input type="text" class="info-input" value="None" readonly>
+                </div>
+
+                <div class="info-footer">
+                <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+
+            <!-- Emergency Contact -->
+            <section class="information-box animate" id="emergency-contact">
+                <div class="info-header">
+                <h2>Emergency Contact</h2>
+                <button class="edit-btn" aria-label="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                </div>
+                <div class="info-grid">
+                <div class="label">Full Name</div>
+                <input type="text" class="info-input" value="Contact's Full Name" readonly>
+            
+                <div class="label">Relationship</div>
+                <input type="text" class="info-input" value="Spouse/Family/Friend" readonly>
+            
+                <div class="label">City</div>
+                <input type="text" class="info-input" value="Karachi" readonly>
+            
+                <div class="label">Phone Number</div>
+                <input type="text" class="info-input" value="+92 300 2452198" readonly>
+            
+                <div class="label">Physical Address</div>
+                <input type="text" class="info-input" value="H#21 Street 10, Askari 4, Karachi, Pakistan" readonly>
+                </div>
+                <div class="info-footer">
+                <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+            
+            <!-- Recent Symptoms & Diagnosis -->
+            <section class="information-box animate" id="recent-symptoms">
+                <div class="info-header">
+                <h2>Recent Symptoms &amp; Diagnosis</h2>
+                <button class="edit-btn" aria-label="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                </div>
+                <div class="info-grid">
+                <div class="label">Recent Health Concerns</div>
+                <input type="text" class="info-input" value="Severe Migraines" readonly>
+            
+                <div class="label">Prev. Diagnosis</div>
+                <input type="text" class="info-input" value="Not Detected" readonly>
+                </div>
+                <div class="info-footer">
+                <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+
+            <!-- Family History -->
+            <section class="information-box animate" id="family-history">
+                <div class="info-header">
+                <h2>Family History</h2>
+                <button class="edit-btn" aria-label="Edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                </div>
+                <div class="info-grid">
+                <div class="label">Genetic Condition</div>
+                <input type="text" class="info-input" value="Heart Failure" readonly>
+            
+                <div class="label">Common Illnesses</div>
+                <input type="text" class="info-input" value="Diabetes, Flu" readonly>
+                </div>
+                <div class="info-footer">
+                <span class="last-updated">Last updated: never</span>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container py-4">
+            <div class="row align-items-start">
+
+                <!-- Socials -->
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <h5 class="footer-title">Socials</h5>
+                    <div class="social-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="mailto:info@sehatpal.org">
+                            <i class="fas fa-envelope"></i> info@sehatpal.org
+                        </a>
+                        <a href="#"><i class="fab fa-instagram"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-facebook"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-linkedin"></i> sehatpal</a>
+                    </div>
+                </div>
+
+                <!-- Legal -->
+                <div class="col-md-6 text-center text-md-start">
+                    <h5 class="footer-title">Legal</h5>
+                    <div class="legal-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Copyright Policy</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col text-center mt-4 copyright">
+                    &copy; 2025 <span class="brand-name">sehatpal</span>, All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,473 @@
+.sec1 {
+    margin-top: 1.25%;
+    padding-top: 1%;
+    padding-bottom: 0.5%;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+.chatbot-page-title {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 4rem;
+    color: black;
+    padding: 2% 0% 1.5% 0%;
+}
+
+.chat-bot-sec {
+    background-color: white;
+    border: solid 1px black;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.chat-bot-sec .row {
+    flex-wrap: nowrap;
+}
+
+.sec1 {
+    /* margin-top: 0px; */
+    position: relative;
+    background-image: url('imgs/BG1-Light.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    /* height: 75vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: black;
+    /* padding: 2rem; */
+    overflow: hidden;
+    /* makes sure overlay doesn't spill */
+    z-index: 1;
+}
+
+/* Overlay */
+.sec1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f3bd;
+    opacity: 0.25;
+    /* adjust for more/less transparency */
+    z-index: 2;
+}
+
+/* Keep content above the overlay */
+.sec1>* {
+    position: relative;
+    z-index: 3;
+}
+
+.sec2 {
+    /* margin-top: 0px; */
+    position: relative;
+    background-image: url('imgs/BG4-Light.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    /* height: 75vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: black;
+    /* padding: 2rem; */
+    overflow: hidden;
+    /* makes sure overlay doesn't spill */
+    z-index: 1;
+    padding-top: 1.5%;
+    /* was on the chat-section, now on the bg */
+    padding-bottom: 5vh;
+    /* use viewport‐height so it’s consistent */
+}
+
+/* Overlay */
+.sec2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f3bd;
+    opacity: 0.5;
+    /* adjust for more/less transparency */
+    z-index: 2;
+}
+
+/* Keep content above the overlay */
+.sec2>* {
+    position: relative;
+    z-index: 3;
+}
+
+/* 1) Ensure it sits below the fixed navbar */
+.chat-section {
+    /* margin-top: 56px; */
+    /* margin-top: 1.5%; */
+    height: 75vh;
+    /* border: 1px solid black; */
+    padding-left: 10%;
+    padding-right: 10%;
+    /* margin-bottom: 5%; */
+}
+
+/* 2) Chat History Panel */
+.history-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.chat-history-panel {
+    height: 100%;
+    overflow-y: auto;
+    background: #f8f9fa;
+    max-width: 300px;
+    transition: max-width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+    opacity: 1;
+    border-right: solid 1px black !important;
+
+}
+
+/* When collapsed */
+.chat-history-panel.collapsed {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    pointer-events: none;
+}
+
+.chat-hist-box {
+    background-color: #f0dbf4 !important;
+    border-bottom: solid 1px black !important;
+    margin-top: -0.5% !important;
+}
+
+.chat-list .list-group-item {
+    cursor: pointer;
+}
+
+.chat-list .list-group-item:hover {
+    background: #e9ecef;
+}
+
+.chat-list {
+    font-size: 1.25rem;
+
+}
+
+.new-chat {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    padding-bottom: 5%;
+    border-radius: 10px;
+    background-color: #fae0ff;
+}
+
+/*────────────────────────────────────────
+  Slide‑in / out purely via width
+────────────────────────────────────────*/
+.offcanvas-style {
+    /* fixed width when open */
+    flex: 0 0 300px;
+    max-width: 300px;
+    transition: flex-basis 0.3s ease, max-width 0.3s ease;
+    overflow: hidden;
+    /* hide its contents when squished */
+}
+
+/* collapsed state */
+.offcanvas-style.collapsed {
+    /* shrink it entirely */
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    pointer-events: none;
+    /* clicks pass through when hidden */
+}
+
+/* Ensure your chat-window reflows cleanly */
+
+/* 3) Chat Window Panel */
+.chat-window-panel {
+    height: 100%;
+    transition: width 0.3s ease;
+    flex: 1 1 auto;
+    /* take up all the leftover space */
+    transition: flex 0.3s ease;
+}
+
+.chat-title {
+    padding-left: 2%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding-bottom: 1%;
+}
+
+/* Avatar Circle */
+/* .avatar {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ccc;
+  } */
+
+.chat-header-box {
+    border-bottom: solid 1px black !important;
+    background-color: #dec2e3 !important;
+}
+
+
+/* Messages */
+/* Make each wrapper span the full width */
+.message-wrapper {
+    width: 100%;
+    align-items: flex-start;
+    /* tops of avatar & bubble align */
+}
+
+/* The round avatar */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    /* never collapse */
+    border: solid 1px black;
+    background-color: #000;
+}
+
+/* Optional spacing from the window edges */
+/* .bot-wrapper { margin-left: 1%; }
+.user-wrapper { margin-right: 1%; } */
+
+.message.bot,
+.message.user {
+    margin: 0;
+    /* no negative or horizontal margins */
+}
+
+.bot-wrapper {
+    padding-left: 0.5rem;
+    /* space from left container edge */
+    justify-content: flex-start;
+}
+
+.user-wrapper {
+    padding-right: 0.5rem;
+    /* space from right container edge */
+    justify-content: flex-end;
+}
+
+
+.chat-messages {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    /* optional: vertical padding only */
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* keep vertical scrolling */
+    flex-grow: 1;
+    /* fill available height */
+}
+
+.message {
+    flex-shrink: 0;
+    /* keep the bubble’s height intact */
+    max-width: 50%;
+    line-height: 1.5;
+    display: flex;
+    /* make the bubble a flex container */
+    flex-direction: column;
+    /* stack lines top‑to‑bottom */
+    justify-content: center;
+    /* center the text vertically */
+    min-height: 30px !important;
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border: solid 1px black;
+}
+
+.message.bot {
+    background: #d093e6;
+    align-self: flex-start;
+    /* push it all the way left */
+    margin-top: -1%;
+    margin-left: 2%;
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+    padding-bottom: 1.5% !important;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 0px;
+}
+
+.message.user {
+    background: #7d2a9b !important;
+    align-self: flex-end;
+    /* push it all the way right */
+    margin-top: -1%;
+    margin-right: 2%;
+    padding-left: 3% !important;
+    padding-right: 2% !important;
+    padding-bottom: 1% !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 20px;
+}
+
+/* 4) Input */
+.input-field-box {
+    border-top: solid 1px black !important;
+    background-color: #dec2e3 !important;
+}
+
+/* Input Box Styling */
+#chatInput {
+    /* border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px; */
+
+    border-radius: 18px;
+}
+
+/* Placeholder Font + Padding */
+.input-placeholder {
+    padding-left: 2.5% !important;
+    padding-bottom: 2%;
+    padding-top: 1.5%;
+    font-size: 1.3rem;
+    border: solid 1px black;
+}
+
+/* Icon Button Styling */
+.send-icon-btn {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    /* distance from right edge */
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #343a40;
+    /* dark color */
+    cursor: pointer;
+}
+
+.send-icon-btn:hover i {
+    color: #000;
+    /* Darker on hover */
+}
+
+.send-icon-btn:active i {
+    transform: scale(0.95);
+}
+
+
+/*   
+  #chatInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  #sendBtn {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .input-placeholder{
+    padding-left: 2.5% !important;
+    padding-bottom: 2%;
+    padding-top:1.5%; 
+    font-size: 1.3rem;
+  } */
+
+/* 5) Responsive: stack panels on small screens */
+
+/* === MOBILE (≤ 767px): let panels stack and page scroll === */
+@media (max-width: 767.98px) {
+
+    /* 1) Let the outer sections grow/shrink naturally */
+    .chat-section,
+    .chat-bot-sec {
+        height: auto !important;
+    }
+
+    /* 2) Stack history above chat window */
+    .chat-bot-sec .row {
+        flex-direction: column;
+        /* gap: 1rem; */
+    }
+
+    /* 3) History panel becomes a top strip */
+    #chatHistoryPanel {
+        width: 100%;
+        max-height: 200px;
+        /* adjust if you want a taller/lower strip */
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        overflow-y: auto;
+        /* allow scrolling within history */
+    }
+
+    /* 4) Chat window just flows—no forced height */
+    .chat-window-panel {
+        width: 100%;
+        flex: 1 1 auto;
+        height: auto;
+    }
+
+    /* 5) Make sure messages area scrolls if very long */
+    .chat-messages {
+        position: relative;
+        /* allow page-level scroll */
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .sec1 {
+        padding-top: 10%;
+    }
+}
+
+
+/* make chat bubbles wider & text smaller on very small screens */
+@media (max-width: 575.98px) {
+    .message {
+        max-width: 80%;
+        font-size: 1rem;
+    }
+
+    /* ↓ Add this to shrink avatars proportionally */
+    .avatar {
+        width: 2rem;
+        /* was 3rem (or 40px), now 32px */
+        height: 2rem;
+    }
+}
+
+/* @media (max-width: 1245px){
+    .footer{
+        padding-top: -1.5%;
+    }
+}
+   */
