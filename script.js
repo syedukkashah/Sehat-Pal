@@ -77,6 +77,7 @@ const searchOverlay = document.getElementById("searchOverlay");
 const searchSubmit = document.getElementById("searchSubmit");
 const searchBar = document.getElementById("searchBar"); // you forgot to define this globally!
 
+const INFERMEDICA_URL = 
 // Helper function to close the search bar
 function closeSearchBar() {
   searchBarWrap.classList.remove("active");
