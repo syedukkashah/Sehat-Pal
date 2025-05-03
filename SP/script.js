@@ -27,7 +27,7 @@ const searchIcon = document.getElementById("searchIcon");
 const searchBarWrap = document.getElementById("searchBarContainer");
 const searchOverlay = document.getElementById("searchOverlay");
 const searchSubmit = document.getElementById("searchSubmit");
-const searchBar = document.getElementById("searchBar"); // you forgot to define this globally!
+const searchBar = document.getElementById("searchBar"); 
 
 // Helper function to close the search bar
 function closeSearchBar() {
@@ -292,7 +292,52 @@ function appendBotMessage(text) {
 
   const bubble = document.createElement("div");
   bubble.className = "message bot p-1";
-  bubble.textContent = text;
+  
+  // Add specific classes based on message content
+  if (text.includes("❓")) {
+    bubble.classList.add("question-message");
+  } else if (text.includes("📊")) {
+    bubble.classList.add("diagnosis-message");
+  } else if (text.includes("❌")) {
+    bubble.classList.add("error-message");
+  }
+  
+  // Process text by lines
+  let lastLineHadEmoji = false;
+  const formattedText = text.split('\n').map((line, index) => {
+    // Skip empty lines
+    if (!line.trim()) {
+      return '<br>';
+    }
+    
+    // Add extra styling for bullet points
+    if (line.trim().startsWith('•')) {
+      return `<span class="ms-2">${line}</span>`;
+    }
+    
+    // Check if this line starts with an emoji
+    const startsWithEmoji = /^[\u{1F300}-\u{1F6FF}]|[\u{2600}-\u{26FF}]/u.test(line.trim());
+    
+    // Add section break class if this line starts with emoji and previous line didn't
+    if (startsWithEmoji && !lastLineHadEmoji && index > 0) {
+      lastLineHadEmoji = true;
+      // Replace the emoji with a span-wrapped version
+      const emojiMatch = line.match(/^([\u{1F300}-\u{1F6FF}]|[\u{2600}-\u{26FF}])/u);
+      if (emojiMatch) {
+        const emoji = emojiMatch[0];
+        const restOfLine = line.slice(emoji.length);
+        return `<span class="emoji-section-start"><span class="emoji">${emoji}</span>${restOfLine}</span>`;
+      }
+    }
+    
+    lastLineHadEmoji = startsWithEmoji;
+    
+    // Enhance emojis with special class
+    return line.replace(/([\u{1F300}-\u{1F6FF}]|[\u{2600}-\u{26FF}])/gu, '<span class="emoji">$1</span>');
+  }).join('<br>');
+  
+  // Use innerHTML instead of textContent to render formatted text
+  bubble.innerHTML = formattedText;
 
   wrapper.appendChild(avatar);
   wrapper.appendChild(bubble);
@@ -301,10 +346,41 @@ function appendBotMessage(text) {
   scrollToBottom();
 }
 
-// ❼ Stubbed "getBotReply" – replace with real API call
+// Import the diagnosis module
+import { startDiagnosis, processDiagnosisInput, isInDiagnosis, endDiagnosis } from './diagnosis.js';
+
+// ❼ Enhanced "getBotReply" with diagnosis capability
 async function getBotReply(userText) {
-  // TODO: replace with actual fetch/WebSocket call
-  return `🤖 You said: "${userText}"`;
+  // Check for diagnosis commands
+  const lowerText = userText.toLowerCase();
+  
+  if (lowerText === 'diagnose me' || lowerText === 'check symptoms' || lowerText.includes('diagnose')) {
+    return await startDiagnosis();
+  }
+  
+  if (lowerText === 'stop diagnosis' || lowerText === 'cancel') {
+    if (isInDiagnosis()) {
+      return endDiagnosis();
+    }
+    return "❌ No active diagnosis session to cancel.";
+  }
+  
+  // If we're in an active diagnosis, process input through the diagnosis system
+  if (isInDiagnosis()) {
+    return await processDiagnosisInput(userText);
+  }
+  
+  // Default responses for non-diagnosis mode
+  if (lowerText.includes('hello') || lowerText.includes('hi')) {
+    return "👋 Hello! I'm SehatPal, your health assistant. How can I help you today?";
+  }
+  
+  if (lowerText.includes('help')) {
+    return "ℹ️ I can help you diagnose symptoms. Here are your options:\n\n💡 Type 'diagnose me' to start the symptom checker\n💡 Answer my questions about your symptoms\n💡 Type 'cancel' to stop a diagnosis at any time\n\nHow can I assist you today?";
+  }
+  
+  // Default fallback
+  return "👋 I'm here to help with medical concerns.\n\n💡 Type 'diagnose me' to check your symptoms\n💡 Type 'help' to see all available options";
 }
 
 // Chatbot functionality - Only initialize if we're on the chatbot page
