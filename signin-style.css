@@ -1,0 +1,308 @@
+/*-----------------------------------------
+  Theme Variables (light & dark)
+-----------------------------------------*/
+:root {
+    --bg-body: rgb(240, 243, 189);
+    --font-color: #000000;
+    --border-color: #000000;
+    --plain-bg: #ffffff;
+    --bg1: url('imgs/BG1-Light.png');
+    --overlay-color: #f0f3bd;
+    --overlay-opacity: 0.4;
+}
+
+body.dark-mode {
+    --bg-body: #121212;
+    --font-color: #ffffff;
+    --border-color: #ffffff;
+    --plain-bg: #000000;
+    --bg1: url('imgs/BG1-Dark.png');
+    --overlay-color: #000000;
+    --overlay-opacity: 0.4;
+}
+
+/*-----------------------------------------
+  Font-face & Body Background
+-----------------------------------------*/
+@font-face {
+    font-family: 'Thunder LC', sans-serif;
+    src: url('fonts/Thunder-LC.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: 'Darker Grotesque', sans-serif;
+    background: var(--bg-body);
+}
+
+/*-----------------------------------------
+  Welcome section
+-----------------------------------------*/
+.welcome-title {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 6.3rem;
+    color: var(--font-color);
+}
+.welcome-subtitle {
+    font-family: 'Thunder LC', sans-serif;
+    color: var(--font-color);
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+/*-----------------------------------------
+  Sign-in Section Padding
+-----------------------------------------*/
+.signin-sec {
+    padding-top: 8%;
+    padding-bottom: 10%;
+}
+
+/*-----------------------------------------
+  Parallax Background Section
+-----------------------------------------*/
+.signin-page {
+    position: relative;
+    background-image: var(--bg1);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+    z-index: 1;
+}
+.signin-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-color);
+    opacity: var(--overlay-opacity);
+    z-index: 2;
+}
+.signin-page > * {
+    position: relative;
+    z-index: 3;
+}
+
+/*-----------------------------------------
+  Login Container & Header
+-----------------------------------------*/
+.login-container {
+    max-width: 450px;
+    margin: 3rem auto;
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.login-container .login-title {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 2rem;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--plain-bg);
+    margin: 0;
+    color: var(--font-color);
+}
+
+/*-----------------------------------------
+  Form Controls & Buttons
+-----------------------------------------*/
+.login-container .form-control {
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    background: #ffffff;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.25rem;
+    color: black;
+}
+.login-container .form-control:focus {
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+.btn-login {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 1.5rem;
+    background: var(--border-color);
+    color: var(--plain-bg);
+    border: solid 1px var(--border-color);
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    width: 75%;
+}
+.btn-login:hover {
+    background: var(--plain-bg);
+    color: var(--font-color);
+    border: solid 1px var(--border-color);
+}
+
+/*-----------------------------------------
+  Links Below Button
+-----------------------------------------*/
+.login-container .link-row {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--font-color);
+}
+.login-container .link-row a {
+    text-decoration: none;
+    color: var(--font-color);
+}
+.login-container .link-row a:hover {
+    text-decoration: underline;
+}
+
+/*-----------------------------------------
+  Separator Styling
+-----------------------------------------*/
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    font-family: 'Darker Grotesque', sans-serif;
+    color: var(--font-color);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.separator span {
+    padding: 0 0.75rem;
+    background: var(--bg-body);
+    z-index: 1;
+}
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+.separator::before { margin-right: 0.5rem; }
+.separator::after  { margin-left: 0.5rem; }
+
+/*-----------------------------------------
+  Social & Guest Buttons
+-----------------------------------------*/
+.btn-google,
+.btn-guest {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    background: var(--plain-bg);
+    color: var(--font-color);
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 450;
+    padding: 0.75rem;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+.btn-google img,
+.btn-guest img {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    margin-right: 0.75rem;
+}
+.btn-google:hover,
+.btn-guest:hover {
+    background: var(--border-color);
+    color: var(--plain-bg);
+    border: solid 1px var(--border-color);
+}
+
+/*-----------------------------------------
+  Responsive Typography & Layout
+-----------------------------------------*/
+@media (max-width: 991px) {
+    .welcome-title {
+        padding-top: 10%;
+        font-size: 5.5rem;
+    }
+    .welcome-subtitle {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-title {
+        padding-top: 10%;
+        font-size: 4.5rem;
+    }
+    .welcome-subtitle {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 552px) {
+    .welcome-title {
+        padding-top: 5%;
+        font-size: 3.5rem;
+    }
+    .welcome-subtitle {
+        font-size: 1.25rem;
+    }
+    .login-container .login-title {
+        font-size: 1.75rem;
+    }
+    .signin-page {
+        height: auto;
+    }
+    .login-container {
+        margin: 2rem auto 2rem;
+    }
+}
+
+/*-----------------------------------------
+  Custom Checkbox Styles
+-----------------------------------------*/
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.form-check-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0 !important;
+    background-color: transparent;
+    margin: 0;
+    margin-right: 0.75rem;
+    position: relative;
+    cursor: pointer;
+    accent-color: tomato !important;
+}
+.form-check-input:checked::before {
+    /* keep default check styling */
+}
+.form-check-label {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.25rem;
+    color: var(--font-color);
+    margin: 0;
+    cursor: pointer;
+}
+.form-check-input:focus { outline: none; box-shadow: none; }
+.btn-login:focus { outline: none; box-shadow: none; }
+.form-check-input:focus-visible { outline: 2px solid var(--border-color); }
+.btn-login:focus-visible   { outline: 2px solid var(--border-color); }
