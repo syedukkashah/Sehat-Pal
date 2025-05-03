@@ -19,14 +19,19 @@
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="app1.css">
-    <link rel="stylesheet" href="app2.css">
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="chatbot-style.css">
+    <link rel="stylesheet" href="medicalrecords-style.css">
 
     <!-- Font Awesome Link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <title>Your Medical Records</title>
+    
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="records.js"></script>
 </head>
 
 <body>
@@ -41,7 +46,11 @@
             <div class="d-flex align-items-center gap-3">
                 <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
+                
                 <!-- Hamburger Icon -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#menuModal">
@@ -101,17 +110,41 @@
 
     <section class="sec1">
         <section class="container chatbot-title-section">
-            <h3 class="text-center chatbot-page-title animate">welcome to ukkashah's medical records.</h3>
+            <h3 class="text-center chatbot-page-title animate">welcome to your medical records.</h3>
         </section>
     </section>
 
+    <!-- Medical Records Dashboard Section -->
+    <section class="s1 mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>Your Medical Records</h2>
+                        <button id="add-record-btn" class="btn btn-primary">Add New Record</button>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div id="records-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        <!-- Records will be added here dynamically -->
+                    </div>
+                    <div id="no-records-message" class="text-center py-5">
+                        <p class="lead">You don't have any medical records yet.</p>
+                        <p>Click the "Add New Record" button to create your first record.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- User Info Section -->
     <section class="s1">
         <div class="container info-wrapper">
             <section class="information-box animate" id="personal-info">
                 <div class="info-header">
                     <h2>Personal Information</h2>
-                    <button class="edit-btn" aria-label="Edit">
+                    <button class="edit-btn" data-editing="false" aria-label="Edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </button>
 
@@ -120,24 +153,19 @@
 
                 <div class="info-grid">
                     <div class="label">Full Name</div>
-                    <!-- <div class="value">User Full Name</div> -->
                     <input type="text" class="info-input" value="User Full Name" readonly>
 
                     <div class="label">Date of Birth</div>
-                    <!-- <div class="value">DD/MM/YYYY</div> -->
                     <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
 
                     <div class="label">Gender</div>
-                    <!-- <div class="value">Male / Female / Other</div> -->
                     <input type="text" class="info-input" value="Male / Female / Other" readonly>
 
                     <div class="label">Email Address</div>
-                    <!-- <div class="value">ibrahimjoharfarooqi@gmail.com</div> -->
-                    <input type="email" class="info-input" value="ibrahimjoharfarooqi@gmail.com" readonly>
+                    <input type="email" class="info-input" value="user@example.com" readonly>
 
                     <div class="label">Physical Address</div>
-                    <!-- <div class="value">H#109 Downing Street, Illinois, USA</div> -->
-                    <input type="text" class="info-input" value="H#109 Downing Street, Illinois, USA" readonly>
+                    <input type="text" class="info-input" value="Your Address Here" readonly>
                 </div>
 
                 <div class="info-footer">
@@ -150,7 +178,7 @@
             <section class="information-box animate" id="medical-info">
                 <div class="info-header">
                 <h2>Medical Information</h2>
-                <button class="edit-btn" aria-label="Edit">
+                <button class="edit-btn" data-editing="false" aria-label="Edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
                 </div>
@@ -159,16 +187,16 @@
                 <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
             
                 <div class="label">Chronic Illness</div>
-                <input type="text" class="info-input" value="Acute Achalasia" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Past Surgeries (if any)</div>
-                <input type="text" class="info-input" value="Balloon Dilation" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Current Medicines</div>
-                <input type="text" class="info-input" value="List of Medicines" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Allergies</div>
-                <input type="text" class="info-input" value="List of Allergies" readonly>
+                <input type="text" class="info-input" value="None" readonly>
                 </div>
                 <div class="info-footer">
                 <span class="last-updated">Last updated: never</span>
@@ -179,19 +207,19 @@
             <section class="information-box animate" id="lifestyle-info">
                 <div class="info-header">
                 <h2>Lifestyle Information</h2>
-                <button class="edit-btn" aria-label="Edit">
+                <button class="edit-btn" data-editing="false" aria-label="Edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
                 </div>
                 <div class="info-grid">
                 <div class="label">Dietary Restrictions</div>
-                <input type="text" class="info-input" value="High Carbohydrates" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Smoking Status</div>
-                <input type="text" class="info-input" value="Yes/No" readonly>
+                <input type="text" class="info-input" value="No" readonly>
             
                 <div class="label">Exercise Frequency</div>
-                <input type="text" class="info-input" value="5 times/week" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Avg Alcohol Cons.</div>
                 <input type="text" class="info-input" value="None" readonly>
@@ -206,7 +234,7 @@
             <section class="information-box animate" id="emergency-contact">
                 <div class="info-header">
                 <h2>Emergency Contact</h2>
-                <button class="edit-btn" aria-label="Edit">
+                <button class="edit-btn" data-editing="false" aria-label="Edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
                 </div>
@@ -218,13 +246,13 @@
                 <input type="text" class="info-input" value="Spouse/Family/Friend" readonly>
             
                 <div class="label">City</div>
-                <input type="text" class="info-input" value="Karachi" readonly>
+                <input type="text" class="info-input" value="City Name" readonly>
             
                 <div class="label">Phone Number</div>
-                <input type="text" class="info-input" value="+92 300 2452198" readonly>
+                <input type="text" class="info-input" value="Phone Number" readonly>
             
                 <div class="label">Physical Address</div>
-                <input type="text" class="info-input" value="H#21 Street 10, Askari 4, Karachi, Pakistan" readonly>
+                <input type="text" class="info-input" value="Address" readonly>
                 </div>
                 <div class="info-footer">
                 <span class="last-updated">Last updated: never</span>
@@ -235,36 +263,16 @@
             <section class="information-box animate" id="recent-symptoms">
                 <div class="info-header">
                 <h2>Recent Symptoms &amp; Diagnosis</h2>
-                <button class="edit-btn" aria-label="Edit">
+                <button class="edit-btn" data-editing="false" aria-label="Edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
                 </div>
                 <div class="info-grid">
                 <div class="label">Recent Health Concerns</div>
-                <input type="text" class="info-input" value="Severe Migraines" readonly>
+                <input type="text" class="info-input" value="None" readonly>
             
                 <div class="label">Prev. Diagnosis</div>
-                <input type="text" class="info-input" value="Not Detected" readonly>
-                </div>
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
-
-            <!-- Family History -->
-            <section class="information-box animate" id="family-history">
-                <div class="info-header">
-                <h2>Family History</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Genetic Condition</div>
-                <input type="text" class="info-input" value="Heart Failure" readonly>
-            
-                <div class="label">Common Illnesses</div>
-                <input type="text" class="info-input" value="Diabetes, Flu" readonly>
+                <input type="text" class="info-input" value="None" readonly>
                 </div>
                 <div class="info-footer">
                 <span class="last-updated">Last updated: never</span>
@@ -272,6 +280,109 @@
             </section>
         </div>
     </section>
+
+    <!-- Add Record Modal -->
+    <div id="add-record-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Medical Record</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-record-form">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="record-type">Record Type*</label>
+                            <select id="record-type" class="form-select" required>
+                                <option value="">Select Type</option>
+                                <option value="General Checkup">General Checkup</option>
+                                <option value="Specialist Visit">Specialist Visit</option>
+                                <option value="Lab Test">Lab Test</option>
+                                <option value="Vaccination">Vaccination</option>
+                                <option value="Surgery">Surgery</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="record-date">Date*</label>
+                            <input type="date" id="record-date" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="blood-pressure">Blood Pressure (mmHg)</label>
+                            <input type="text" id="blood-pressure" class="form-control" placeholder="e.g., 120/80">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="heart-rate">Heart Rate (bpm)</label>
+                            <input type="number" id="heart-rate" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="temperature">Temperature (°F)</label>
+                            <input type="number" id="temperature" class="form-control" step="0.1">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" class="form-control" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="symptoms">Symptoms</label>
+                        <textarea id="symptoms" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="diagnosis">Diagnosis</label>
+                        <textarea id="diagnosis" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="medications">Medications (one per line)</label>
+                        <textarea id="medications" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="doctor-name">Doctor Name</label>
+                            <input type="text" id="doctor-name" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="facility">Healthcare Facility</label>
+                            <input type="text" id="facility" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Record Details Modal -->
+    <div id="record-details-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Medical Record Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="record-details-content"></div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container py-4">
@@ -311,7 +422,6 @@
             </div>
         </div>
     </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>

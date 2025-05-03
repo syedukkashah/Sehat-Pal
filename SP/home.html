@@ -17,12 +17,16 @@
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="home-style.css">
 
     <!-- Font Awesome Link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <title>Sehat Pal</title>
+
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 
     <style>
         .navbar.animate {
@@ -41,6 +45,16 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        #user-name {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -70,7 +84,10 @@
                 <div class="d-flex align-items-center gap-3">
                     <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                    <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>               
+                    <div class="user-info">
+                        <span id="user-name" class="text-white"></span>
+                        <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                    </div>
                       
                     <!-- Hamburger Icon -->
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
@@ -121,7 +138,7 @@
                             <span>——</span>
                             <a href="aboutus.html" class="nav-link">about us</a>
                         </div>
-                        <div class="menu-item">
+                        <div class="menu-item auth-link" data-auth-state="signed-out">
                             <a href="signin.html" class="nav-link">sign in/sign up</a>
                         </div>
                     </div>
@@ -138,7 +155,7 @@
                             <p class="hero-para animate">sehat pal is a not for profit platform, curated for everyone
                                 and their loved ones. a platform created to diagnose everyday illnesses we suffer. our
                                 advanced ai chatbot is available 24/7 to provide round the clock services to you
-                                wherever you’re at in the world.</p>
+                                wherever you're at in the world.</p>
                         </div>
                     </div>
 
@@ -178,7 +195,6 @@
             </section>
         </section>
 
-
         <section class="section3">
             <section class="container">
                 <div class="row align-items-center medical-record-section">
@@ -199,30 +215,32 @@
                         <div class="med-box animate">
                             <h2 class="box-title">blood sugar level</h2>
                             <div>
-                                <h1 class="box-value">4.8mmol/L</h1>
+                                <h1 class="box-value">151mg/dL</h1>
                             </div>
                             <div>
-                                <h2 class="box-status">last updated: 24/03/23</h2>
+                                <h2 class="box-status">last updated: 24/04/23</h2>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="med-box animate">
-                            <h2 class="box-title">last medical checkup</h2>
+                            <h2 class="box-title">systolic level</h2>
                             <div>
-                                <h1 class="box-value">21 aug'22</h1>
+                                <h1 class="box-value">118mgHg</h1>
                             </div>
                             <div>
-                                <h2 class="box-status">last updated: 24/03/23</h2>
+                                <h2 class="box-status">last updated: 24/05/23</h2>
                             </div>
                         </div>
                     </div>
 
-                    <div class="text-center">
-                        <button class="custom-btn-2">update your medical records</button>
+                    <div class="text-center mt-4 mb-5 animate">
+                        <a href="medical_records.html" class="btn custom-btn-3">
+                            go to medical records 
+                            <span class="arrow-icon">→</span>
+                        </a>
                     </div>
-
                 </div>
             </section>
         </section>
@@ -271,13 +289,13 @@
                                 in collaboration with doctors, psychologists, and wellness coaches to ensure that users
                                 not only get answers but also understand them. Knowledge, we believe, is the first step
                                 to prevention.
-                                We understand that healthcare is not one-size-fits-all. That’s why we’re constantly
+                                We understand that healthcare is not one-size-fits-all. That's why we're constantly
                                 evolving—listening to user feedback, partnering with local clinics, and tailoring
                                 services to suit diverse cultural and medical needs.
-                                At Sehatpal, we’re not just offering a product; we’re building a movement. A movement
+                                At Sehatpal, we're not just offering a product; we're building a movement. A movement
                                 where compassion meets code, where accessibility meets accuracy, and where your health
                                 is always a priority.
-                                Because to us, healthcare isn’t just about treatment—it’s about trust, dignity, and
+                                Because to us, healthcare isn't just about treatment—it's about trust, dignity, and
                                 empowerment for every human being.
                             </p>
                         </div>

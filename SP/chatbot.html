@@ -18,6 +18,16 @@
           'GRAD' 0,
           'opsz' 24
         }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        #user-name {
+            margin-right: 10px;
+        }
     </style>
 
 
@@ -27,14 +37,18 @@
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="app1.css">
+    <link rel="stylesheet" href="chatbot-style.css">
 
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="home-style.css">
 
     <!-- Font Awesome Link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <title>SehatPal Chat</title>
+    
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -50,7 +64,10 @@
             <div class="d-flex align-items-center gap-3">
                 <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
                 <!-- Hamburger Icon -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#menuModal">
@@ -100,7 +117,7 @@
                         <span>——</span>
                         <a href="aboutus.html" class="nav-link">about us</a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
                         <a href="signin.html" class="nav-link">sign in/sign up</a>
                     </div>
                 </div>
@@ -126,8 +143,8 @@
                             <i class="bi bi-clock-history me-2 fs-3"></i>
                             <h4 class="mb-0 history-title">Chat History</h4>
                         </div>
-                        <ul class="list-group list-group-flush chat-list">
-                            <li class="list-group-item d-flex align-items-center">
+                        <ul id="chatHistoryList" class="list-group list-group-flush chat-list">
+                            <!-- <li class="list-group-item d-flex align-items-center">
                                 <i class="bi bi-chat-square-text me-2"></i> Coughing & Flu
                             </li>
                             <li class="list-group-item d-flex align-items-center">
@@ -141,10 +158,10 @@
                             </li>
                             <li class="list-group-item d-flex align-items-center">
                                 <i class="bi bi-chat-square-text me-2"></i> Diarrhoea
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="p-3 border-top">
-                            <button class="btn btn-outline-dark w-100 new-chat">New Chat</button>
+                            <button id="newChatBtn" class="btn btn-outline-dark w-100 new-chat">New Chat</button>
                         </div>
                     </div>
     
@@ -163,17 +180,17 @@
                                 </button>
                         </div>
                         <!-- Messages -->
-                        <div class="flex-grow-1 overflow-auto py-3 px-0 chat-messages">
+                        <div id="chatMessages" class="flex-grow-1 overflow-auto py-3 px-0 chat-messages">
     
                             <!-- BOT -->
                             <div class="message-wrapper bot-wrapper d-flex mb-3">
-                              <img src="imgs/sehatpal - logo - black.png" alt="SehatPal" class="avatar">
+                              <!-- <img src="imgs/sehatpal - logo - black.png" alt="SehatPal" class="avatar">
                               <div class="message bot p-1">
                                 hi, i am sehat pal, here at your service!
-                              </div>
+                              </div> -->
                             </div>
                           
-                            <!-- USER -->
+                            <!-- USER
                             <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                               <div class="message user p-1">
                                 i am feeling muscular pain, my guy, it hurts so freaking much.
@@ -181,7 +198,7 @@
                               <img src="imgs/user-avatar.png" alt="You" class="avatar">
                             </div>
     
-                            <!-- BOT -->
+                            <!-- BOT
                             <div class="message-wrapper bot-wrapper d-flex mb-3">
                                 <img src="imgs/sehatpal - logo - black.png" alt="SehatPal" class="avatar">
                                 <div class="message bot p-1">
@@ -189,7 +206,7 @@
                                 </div>
                             </div>
     
-                            <!-- USER -->
+                            <!-- USER
                             <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                                 <div class="message user p-1">
                                     You better be sorry-
@@ -197,7 +214,7 @@
                                 <img src="imgs/user-avatar.png" alt="You" class="avatar">
                             </div>
     
-                            <!-- USER -->
+                            <!-- USER
                             <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                                 <div class="message user p-1">
                                     khair-
@@ -205,7 +222,7 @@
                                 <img src="imgs/user-avatar.png" alt="You" class="avatar">
                             </div>
                             
-                            <!-- BOT -->
+                            <!-- BOT
                             <div class="message-wrapper bot-wrapper d-flex mb-3">
                                 <img src="imgs/sehatpal - logo - black.png" alt="SehatPal" class="avatar">
                                 <div class="message bot p-1">
@@ -213,7 +230,7 @@
                                 </div>
                               </div>
                             
-                              <!-- USER -->
+                              <!-- USER
                               <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                                 <div class="message user p-1">
                                   i am feeling muscular pain, my guy, it hurts so freaking much.
@@ -221,7 +238,7 @@
                                 <img src="imgs/user-avatar.png" alt="You" class="avatar">
                               </div>
       
-                              <!-- BOT -->
+                              <!-- BOT
                               <div class="message-wrapper bot-wrapper d-flex mb-3">
                                   <img src="imgs/sehatpal - logo - black.png" alt="SehatPal" class="avatar">
                                   <div class="message bot p-1">
@@ -229,7 +246,7 @@
                                   </div>
                               </div>
       
-                              <!-- USER -->
+                              <!-- USER
                               <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                                   <div class="message user p-1">
                                       You better be sorry-
@@ -237,13 +254,13 @@
                                   <img src="imgs/user-avatar.png" alt="You" class="avatar">
                               </div>
       
-                              <!-- USER -->
+                              <!-- USER
                               <div class="message-wrapper user-wrapper d-flex justify-content-end mb-3">
                                   <div class="message user p-1">
                                       khair-
                                   </div>
                                   <img src="imgs/user-avatar.png" alt="You" class="avatar">
-                              </div>
+                              </div> -->
     
                             <!-- repeat for each message… -->
                           
