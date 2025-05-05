@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const checkbox = document.getElementById("modeToggle");
   const body     = document.body;
@@ -184,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmLabel = document.getElementById('confirmEmailLabel');
   confirmLabel.textContent = 'Confirm Email: ' + (email || '[no email supplied]');
 
-  // 3) Disable the “Save New Password” link until checked
+  // 3) Disable the "Save New Password" link until checked
   const saveLink = document.querySelector('.btn-login');
   // stash the real target
   const targetHref = saveLink.getAttribute('href');
@@ -248,7 +247,7 @@ window.addEventListener('load', () => {
   }, waitFor);
 });
 
-// ── Chat “Send” Logic ──
+// ── Chat "Send" Logic ──
 
 // ❶ Grab chat elements
 const sendBtn      = document.getElementById("sendBtn");
@@ -302,32 +301,66 @@ function appendBotMessage(text) {
   scrollToBottom();
 }
 
-// ❼ Stubbed “getBotReply” – replace with real API call
+// ❼ Stubbed "getBotReply" – replace with real API call
 async function getBotReply(userText) {
   // TODO: replace with actual fetch/WebSocket call
   return `🤖 You said: "${userText}"`;
 }
 
-// ❽ Single async handler for send
-sendBtn.addEventListener("click", async () => {
-  const text = chatInput.value.trim();
-  if (!text) return;          // ignore empty
-
-  // 1️⃣ add user message
-  appendUserMessage(text);
-  chatInput.value = "";
-  chatInput.focus();
-
-  // 2️⃣ get & add bot reply
-  const botReply = await getBotReply(text);
-  appendBotMessage(botReply);
-});
-
-// also send on Enter key
-chatInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendBtn.click();
+// Chatbot functionality - Only initialize if we're on the chatbot page
+document.addEventListener('DOMContentLoaded', () => {
+  // Check if chat elements exist before trying to use them
+  const sendBtn = document.getElementById("sendBtn");
+  const chatInput = document.getElementById("chatInput");
+  const chatMessages = document.getElementById("chatMessages");
+  
+  if (sendBtn && chatInput && chatMessages) {
+    // Initialize chat if all elements exist
+    
+    // Create first message in the chat
+    if (chatMessages.children.length === 0) {
+      appendBotMessage("Hi, I'm SehatPal! How can I help you today?");
+    }
+    
+    // ❽ Single async handler for send
+    sendBtn.addEventListener("click", async () => {
+      const text = chatInput.value.trim();
+      if (!text) return;          // ignore empty
+    
+      // 1️⃣ add user message
+      appendUserMessage(text);
+      chatInput.value = "";
+      chatInput.focus();
+    
+      // 2️⃣ get & add bot reply
+      const botReply = await getBotReply(text);
+      appendBotMessage(botReply);
+    });
+    
+    // also send on Enter key
+    chatInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+    
+    // Chat history functionality - only initialize if elements exist
+    const historyList = document.getElementById('chatHistoryList');
+    const newChatBtn = document.getElementById('newChatBtn');
+    
+    if (historyList && newChatBtn) {
+      // Initialize chat history
+      if (Object.keys(sessions).length === 0) {
+        createNewSession();
+      } else {
+        renderHistory();
+        loadSession(currentSessionId || Object.keys(sessions)[0]);
+      }
+      
+      // Set up new chat button
+      newChatBtn.addEventListener('click', createNewSession);
+    }
   }
 });
 
@@ -350,7 +383,7 @@ function createNewSession() {
   // seed with exactly one welcome message
   sessions[id] = [
     { from: 'bot',
-      text: "Hi, I’m SehatPal! How can I help you today?" }
+      text: "Hi, I'm SehatPal! How can I help you today?" }
   ];
 
   currentSessionId = id;
@@ -559,24 +592,31 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
 
 
 
-// ❹ Load a session’s messages into the chat window
+// ❹ Load a session's messages into the chat window
 function loadSession(id) {
   currentSessionId = id;
+  
+  // make current session active in UI
   renderHistory();
 
   // clear the chat window
   chatMessages.innerHTML = '';
 
   // re-append the static welcome (optional)
-  //appendBotMessage("Hi, I’m SehatPal! How can I help you today?");
+  //appendBotMessage("Hi, I'm SehatPal! How can I help you today?");
   
   // replay each saved message
-  isReplaying = true;    // ➡️ suppress recording
-  sessions[id].forEach(({from, text}) => {
-    if (from === 'user') appendUserMessage(text);
-    else                 appendBotMessage(text);
-  });
-  isReplaying = false;   // ⬅️ done replaying
+  if (sessions[id] && sessions[id].length > 0) {
+    isReplaying = true;
+    sessions[id].forEach(message => {
+      if (message.from === 'user') {
+        appendUserMessage(message.text);
+      } else {
+        appendBotMessage(message.text);
+      }
+    });
+    isReplaying = false;
+  }
 }
 
 // ❺ Hook into your existing appenders to record messages
@@ -598,10 +638,10 @@ appendBotMessage = function(text) {
 };
 
 
-// ❻ Wire up “New Chat” button
-newChatBtn.addEventListener('click', () => {
-  createNewSession();
-});
+// ❻ Wire up "New Chat" button
+// newChatBtn.addEventListener('click', () => {
+//   createNewSession();
+// });
 
 // ❼ On page load: kick off the very first session
 createNewSession();

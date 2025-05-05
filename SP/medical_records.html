@@ -27,6 +27,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <title>Your Medical Records</title>
+    
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="records.js"></script>
 </head>
 
 <body>
@@ -41,7 +46,11 @@
             <div class="d-flex align-items-center gap-3">
                 <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
+                
                 <!-- Hamburger Icon -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#menuModal">
@@ -87,11 +96,11 @@
                         <a href="chatbot.html" class="nav-link">sehatpal - chatbot</a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="nav-link">medical records</a>
+                        <a href="medical_records.html" class="nav-link">medical records</a>
                         <span>——</span>
                         <a href="aboutus.html" class="nav-link">about us</a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
                         <a href="signin.html" class="nav-link">sign in/sign up</a>
                     </div>
                 </div>
@@ -101,177 +110,136 @@
 
     <section class="sec1">
         <section class="container chatbot-title-section">
-            <h3 class="text-center chatbot-page-title animate">welcome to ukkashah's medical records.</h3>
+            <h3 class="text-center chatbot-page-title animate">welcome to your medical records.</h3>
         </section>
     </section>
 
-
+    <!-- Medical Records Dashboard Section -->
     <section class="s1">
-        <div class="container info-wrapper">
-            <section class="information-box animate" id="personal-info">
-                <div class="info-header">
-                    <h2>Personal Information</h2>
-                    <button class="edit-btn" aria-label="Edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-4 mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="medicalrec-title2">View Your Medical Records</h2>
+                        <button id="add-record-btn" class="custom-btn-3">add new record</button>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div id="records-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+                        <!-- Records will be added here dynamically -->
+                    </div>
+                    <div id="no-records-message" class="text-center py-5 mt-2 mb-4">
+                        <p class="lead">You don't have any medical records yet.</p>
+                        <p>Click the "Add New Record" button to create your first record.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Add Record Modal -->
+        <div id="add-record-modal" class="modal2-overlay hidden">
+            <div class="modal2-content">
+                <div class="modal2-header">
+                    <h2>Add Medical Record</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal2-body">
+                    <form id="add-record-form">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="record-type">Record Type*</label>
+                                <select id="record-type" class="form-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="General Checkup">General Checkup</option>
+                                    <option value="Specialist Visit">Specialist Visit</option>
+                                    <option value="Lab Test">Lab Test</option>
+                                    <option value="Vaccination">Vaccination</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="record-date">Date*</label>
+                                <input type="date" id="record-date" class="form-control" required>
+                            </div>
+                        </div>
 
-                </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="blood-pressure">Blood Pressure (mmHg)</label>
+                                <input type="text" id="blood-pressure" class="form-control" placeholder="e.g., 120/80">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="heart-rate">Heart Rate (bpm)</label>
+                                <input type="number" id="heart-rate" class="form-control">
+                            </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="temperature">Temperature (°F)</label>
+                                <input type="number" id="temperature" class="form-control" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" id="weight" class="form-control" step="0.1">
+                            </div>
+                        </div>
 
-                <div class="info-grid">
-                    <div class="label">Full Name</div>
-                    <!-- <div class="value">User Full Name</div> -->
-                    <input type="text" class="info-input" value="User Full Name" readonly>
+                        <div class="mb-3">
+                            <label for="symptoms">Symptoms</label>
+                            <textarea id="symptoms" class="form-control" rows="2"></textarea>
+                        </div>
 
-                    <div class="label">Date of Birth</div>
-                    <!-- <div class="value">DD/MM/YYYY</div> -->
-                    <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
+                        <div class="mb-3">
+                            <label for="diagnosis">Diagnosis</label>
+                            <textarea id="diagnosis" class="form-control" rows="2"></textarea>
+                        </div>
 
-                    <div class="label">Gender</div>
-                    <!-- <div class="value">Male / Female / Other</div> -->
-                    <input type="text" class="info-input" value="Male / Female / Other" readonly>
+                        <div class="mb-3">
+                            <label for="medications">Medications (one per line)</label>
+                            <textarea id="medications" class="form-control" rows="3"></textarea>
+                        </div>
 
-                    <div class="label">Email Address</div>
-                    <!-- <div class="value">ibrahimjoharfarooqi@gmail.com</div> -->
-                    <input type="email" class="info-input" value="ibrahimjoharfarooqi@gmail.com" readonly>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="doctor-name">Doctor Name</label>
+                                <input type="text" id="doctor-name" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="facility">Healthcare Facility</label>
+                                <input type="text" id="facility" class="form-control">
+                            </div>
+                        </div>
 
-                    <div class="label">Physical Address</div>
-                    <!-- <div class="value">H#109 Downing Street, Illinois, USA</div> -->
-                    <input type="text" class="info-input" value="H#109 Downing Street, Illinois, USA" readonly>
-                </div>
+                        <div class="mb-3">
+                            <label for="notes">Additional Notes</label>
+                            <textarea id="notes" class="form-control" rows="3"></textarea>
+                        </div>
 
-                <div class="info-footer">
-                    <span class="last-updated">Last updated: never</span>
+                        <div class="text-center">
+                            <button type="submit" class="view-details-btn">Save Record</button>
+                        </div>
+                    </form>
                 </div>
-            </section>
-
-
-            <!-- Medical Information -->
-            <section class="information-box animate" id="medical-info">
-                <div class="info-header">
-                <h2>Medical Information</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Vaccination History</div>
-                <input type="text" class="info-input" value="DD/MM/YYYY" readonly>
-            
-                <div class="label">Chronic Illness</div>
-                <input type="text" class="info-input" value="Acute Achalasia" readonly>
-            
-                <div class="label">Past Surgeries (if any)</div>
-                <input type="text" class="info-input" value="Balloon Dilation" readonly>
-            
-                <div class="label">Current Medicines</div>
-                <input type="text" class="info-input" value="List of Medicines" readonly>
-            
-                <div class="label">Allergies</div>
-                <input type="text" class="info-input" value="List of Allergies" readonly>
-                </div>
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
-            
-            <!-- Lifestyle Information -->
-            <section class="information-box animate" id="lifestyle-info">
-                <div class="info-header">
-                <h2>Lifestyle Information</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Dietary Restrictions</div>
-                <input type="text" class="info-input" value="High Carbohydrates" readonly>
-            
-                <div class="label">Smoking Status</div>
-                <input type="text" class="info-input" value="Yes/No" readonly>
-            
-                <div class="label">Exercise Frequency</div>
-                <input type="text" class="info-input" value="5 times/week" readonly>
-            
-                <div class="label">Avg Alcohol Cons.</div>
-                <input type="text" class="info-input" value="None" readonly>
-                </div>
-
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
-
-            <!-- Emergency Contact -->
-            <section class="information-box animate" id="emergency-contact">
-                <div class="info-header">
-                <h2>Emergency Contact</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Full Name</div>
-                <input type="text" class="info-input" value="Contact's Full Name" readonly>
-            
-                <div class="label">Relationship</div>
-                <input type="text" class="info-input" value="Spouse/Family/Friend" readonly>
-            
-                <div class="label">City</div>
-                <input type="text" class="info-input" value="Karachi" readonly>
-            
-                <div class="label">Phone Number</div>
-                <input type="text" class="info-input" value="+92 300 2452198" readonly>
-            
-                <div class="label">Physical Address</div>
-                <input type="text" class="info-input" value="H#21 Street 10, Askari 4, Karachi, Pakistan" readonly>
-                </div>
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
-            
-            <!-- Recent Symptoms & Diagnosis -->
-            <section class="information-box animate" id="recent-symptoms">
-                <div class="info-header">
-                <h2>Recent Symptoms &amp; Diagnosis</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Recent Health Concerns</div>
-                <input type="text" class="info-input" value="Severe Migraines" readonly>
-            
-                <div class="label">Prev. Diagnosis</div>
-                <input type="text" class="info-input" value="Not Detected" readonly>
-                </div>
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
-
-            <!-- Family History -->
-            <section class="information-box animate" id="family-history">
-                <div class="info-header">
-                <h2>Family History</h2>
-                <button class="edit-btn" aria-label="Edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                </div>
-                <div class="info-grid">
-                <div class="label">Genetic Condition</div>
-                <input type="text" class="info-input" value="Heart Failure" readonly>
-            
-                <div class="label">Common Illnesses</div>
-                <input type="text" class="info-input" value="Diabetes, Flu" readonly>
-                </div>
-                <div class="info-footer">
-                <span class="last-updated">Last updated: never</span>
-                </div>
-            </section>
+            </div>
         </div>
     </section>
+
+    <!-- Record Details Modal -->
+    <div id="record-details-modal" class="modal2-overlay hidden">
+        <div class="modal2-content">
+            <div class="modal2-header">
+                <h2>Medical Record Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal2-body">
+                <div id="record-details-content"></div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container py-4">
@@ -312,9 +280,15 @@
         </div>
     </footer>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="medical_records.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeo5nv/R0QmRewsGkdQe1MctZV7Gregor/yRLMR1RTQ5zA=="
+        crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

@@ -18,6 +18,16 @@
           'GRAD' 0,
           'opsz' 24
         }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        #user-name {
+            margin-right: 10px;
+        }
     </style>
 
 
@@ -35,6 +45,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <title>SehatPal Chat</title>
+    
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -50,7 +64,10 @@
             <div class="d-flex align-items-center gap-3">
                 <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
                 <!-- Hamburger Icon -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#menuModal">
@@ -100,7 +117,7 @@
                         <span>——</span>
                         <a href="aboutus.html" class="nav-link">about us</a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
                         <a href="signin.html" class="nav-link">sign in/sign up</a>
                     </div>
                 </div>

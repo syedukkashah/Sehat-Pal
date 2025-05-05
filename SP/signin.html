@@ -30,8 +30,9 @@
 
     <title>Sign In</title>
     
-    <!-- Auth JS -->
-    <script src="auth.js" defer></script>
+    <!-- Firebase & Auth JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -122,7 +123,7 @@
 
                         <div class="p-4">
                             <!-- Form -->
-                            <form>
+                            <form id="signin-form">
                                 <div class="mb-3">
                                     <input type="email" class="form-control" placeholder="Email Address*" required />
                                 </div>
@@ -132,6 +133,7 @@
                                 <div class="mb-3 text-center">
                                     <button type="submit" class="btn btn-login">Login</button>
                                 </div>
+                                <p id="signin-error" class="error-message"></p>
                             </form>
 
                             <!-- Links -->

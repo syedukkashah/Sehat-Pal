@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <title>About Us</title>
+
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -42,7 +46,11 @@
             <div class="d-flex align-items-center gap-3">
                 <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a>
 
-                <a href="#" class="nav-link text-white mx-3"><i class="bi bi-person-circle"></i></a>
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
+                    
                 <!-- Hamburger Icon -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#menuModal">
@@ -92,7 +100,7 @@
                         <span>——</span>
                         <a href="#" class="nav-link">about us</a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
                         <a href="signin.html" class="nav-link">sign in/sign up</a>
                     </div>
                 </div>
@@ -163,6 +171,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="medical_records.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeo5nv/R0QmRewsGkdQe1MctZV7Gregor/yRLMR1RTQ5zA=="
+        crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

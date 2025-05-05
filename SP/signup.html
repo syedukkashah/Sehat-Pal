@@ -30,8 +30,9 @@
 
     <title>Sign Up - Create SehatPal Account</title>
     
-    <!-- Auth JS -->
-    <script src="auth.js" defer></script>
+    <!-- Firebase & Auth JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -111,7 +112,7 @@
 
                         <div class="p-4">
                             <!-- Form -->
-                            <form>
+                            <form id="signup-form">
                                 <div class="mb-3">
                                     <input type="text" class="form-control" placeholder="Full Name*" required />
                                 </div>
@@ -127,6 +128,7 @@
                                 <div class="mb-3 text-center">
                                     <button type="submit" class="btn btn-login">Create Account</button>
                                 </div>
+                                <p id="signup-error" class="error-message"></p>
                             </form>
 
                             <!-- Links -->
