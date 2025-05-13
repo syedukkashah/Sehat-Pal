@@ -1,0 +1,609 @@
+/* === Theme Variables (light & dark) === */
+:root {
+    /* colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-50-opacity: rgba(240, 243, 189, 0.5);
+    --bg-85-opacity: rgba(240, 243, 189, 0.85);
+    --plain1-color: #ffffff;
+    --plain2-color: #000000;
+    --plain3-color: #F4F1EB;
+    --text-primary: #000000;
+    --text-secondary: #4a4a4a;
+    --border-color: #000000;
+    --border-color2: #ffffff;
+    --med-box-overlay: rgba(169, 108, 255, 0.1);
+    --header-bg: #EFF1E6;
+    --chatbot-bg: #FFFFFF;
+    --bot-accent: #6fffe9;
+    --user-accent: #a96cff;
+    --chatinput: #FFFFFF;
+    --history-hover: rgba(169, 108, 255, 0.15);
+
+    /* backgrounds */
+    --bg1: url('imgs/BG1-Light.png');
+    --bg4: url('imgs/BG4-Light.png');
+
+    /* arrow filters */
+    --arrow-default: invert(0);
+    --arrow-hover: invert(1);
+}
+
+body.dark-mode {
+    /* swap palette */
+    --bg-primary: rgba(0, 0, 0, 0.5);
+    --bg-secondary: #1e1e1e;
+    --plain1-color: #000000;
+    --plain2-color: #ffffff;
+    --plain3-color: #0A0A0A;
+    --text-primary: #ffffff;
+    --text-secondary: #e6e6e6;
+    --border-color: #ffffff;
+    --border-color2: #000000;
+    --med-box-overlay: rgba(0, 0, 0, 0.2);
+    --header-bg: #101010;
+    --chatbot-bg: #242625;
+    --bot-accent: #461e7f;
+    --user-accent: #5e2ca5;
+    --chatinput: #2A2A2A;
+    --history-hover: rgba(169, 108, 255, 0.25);
+
+    /* dark backgrounds */
+    --bg1: url('imgs/BG1-Dark.png');
+    --bg4: url('imgs/BG4-Dark.png');
+
+    /* arrow filters */
+    /* --arrow-default: invert(1);
+    --arrow-hover: invert(0); */
+}
+
+/* === Section 1: Hero Background & Overlay === */
+.sec1 {
+    /* margin-top: 1.25%; */
+    padding-top: 1.5%;
+    padding-bottom: 1%;
+    border-top: solid 1px var(--border-color);
+    border-bottom: solid 1px var(--border-color);
+    position: relative;
+    background-image: var(--bg1);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: var(--text-primary);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.sec1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--bg-primary);
+    opacity: 0.25;
+    z-index: 2;
+}
+
+.sec1>* {
+    position: relative;
+    z-index: 3;
+}
+
+/* Page Title */
+.chatbot-page-title {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 4rem;
+    color: var(--text-primary);
+    padding: 2% 0 1.5% 0;
+}
+
+/* === Section 2: Chat Container Background & Overlay === */
+.sec2 {
+    position: relative;
+    background-image: var(--bg4);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: var(--text-primary);
+    overflow: hidden;
+    z-index: 1;
+    padding-top: 1.5%;
+    padding-bottom: 5vh;
+}
+
+.sec2::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--bg-primary);
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.sec2>* {
+    position: relative;
+    z-index: 3;
+}
+
+/* === Chat Section Container === */
+.chat-section {
+    height: 75vh;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+/* === Chatbot Panel Styles === */
+.chat-bot-sec {
+    background-color: var(--plain1-color);
+    border: solid 1px var(--border-color);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.chat-bot-sec .row {
+    flex-wrap: nowrap;
+}
+
+/* === Chat History Panel === */
+.history-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.chat-history-panel {
+    height: 100%;
+    overflow-y: auto;
+    background: var(--plain3-color);
+    max-width: 300px;
+    transition: max-width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    border-right: solid 1px var(--border-color) !important;
+}
+
+.chat-history-panel.collapsed {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    pointer-events: none;
+}
+
+.chat-hist-box {
+    background-color: var(--header-bg) !important;
+    border-bottom: solid 1px var(--border-color) !important;
+    margin-top: -0.5% !important;
+}
+
+.chat-list {
+    font-size: 1.25rem;
+    background-color: var(--header-bg) !important;
+    color: var(--plain2-color) !important;
+}
+
+.chat-list .list-group-item {
+    cursor: pointer;
+}
+
+.chat-list .list-group-item:hover {
+    background-color: var(--chatbot-bg);
+}
+
+/* Override each list‐item’s bg so it picks up your theme */
+.chat-list .list-group-item {
+    background-color: var(--plain1-color) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Hover stays as you had it */
+.chat-list .list-group-item:hover {
+    background-color: var(--chatbot-bg);
+}
+
+/* Chat history item hover: light purple shade */
+.chat-list .list-group-item:hover {
+    background-color: var(--history-hover) !important;
+}
+
+.new-chat {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    padding-bottom: 5%;
+    border-radius: 5px;
+    border: solid 1px var(--plain2-color) !important;
+    background-color: var(--purple-accent);
+    color: var(--plain2-color);
+}
+
+/*************************************/
+
+.chat-history-panel {
+    height: 100%;
+    background: var(--plain3-color);
+    max-width: 300px;
+    transition: max-width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    border-right: solid 1px var(--border-color) !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.chat-history-panel.collapsed {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    pointer-events: none;
+}
+
+.chat-hist-box {
+    background-color: var(--header-bg) !important;
+    border-bottom: solid 1px var(--border-color) !important;
+    margin-top: -0.5% !important;
+}
+
+.chat-list {
+    font-size: 1.25rem;
+    background-color: var(--header-bg) !important;
+    color: var(--plain2-color) !important;
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+.chat-list .list-group-item {
+    cursor: pointer;
+}
+
+.chat-list .list-group-item:hover {
+    background-color: var(--chatbot-bg);
+}
+
+/* Override each list‐item’s bg so it picks up your theme */
+.chat-list .list-group-item {
+    background-color: var(--plain1-color) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Hover stays as you had it */
+.chat-list .list-group-item:hover {
+    background-color: var(--chatbot-bg);
+}
+
+/* Chat history item hover: light purple shade */
+.chat-list .list-group-item:hover {
+    background-color: var(--history-hover) !important;
+}
+
+.new-chat {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    padding-bottom: 5%;
+    border-radius: 5px;
+    border: solid 1px var(--plain2-color) !important;
+    background-color: var(--purple-accent);
+    color: var(--plain2-color);
+}
+
+/* .history-footer{
+    padding: 4.75%;
+    border-top: solid 1px var(--border-color) !important;
+} */
+
+
+
+/* Slide‑in / out via width */
+.offcanvas-style {
+    flex: 0 0 300px;
+    max-width: 300px;
+    transition: flex-basis 0.3s ease, max-width 0.3s ease;
+    overflow: hidden;
+}
+
+.offcanvas-style.collapsed {
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    pointer-events: none;
+}
+
+/* === Chat Window Panel === */
+.chat-window-panel {
+    height: 100%;
+    flex: 1 1 auto;
+    transition: flex 0.3s ease;
+}
+
+.chat-title {
+    padding-left: 2%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding-bottom: 1%;
+}
+
+.chat-header-box {
+    border-bottom: solid 1px var(--border-color) !important;
+    background-color: var(--header-bg) !important;
+}
+
+/* === Messages === */
+.message-wrapper {
+    width: 100%;
+    align-items: flex-start;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: solid 1px var(--border-color);
+    background-color: white;
+}
+
+.bot-wrapper {
+    padding-left: 0.5rem;
+    justify-content: flex-start;
+}
+
+.user-wrapper {
+    padding-right: 0.5rem;
+    justify-content: flex-end;
+}
+
+.message {
+    flex-shrink: 0;
+    max-width: 50%;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 30px !important;
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    /* border: solid 1px var(--border-color); */
+}
+
+.message.bot {
+    background: var(--chatbot-bg);
+    align-self: flex-start;
+    margin-top: -1%;
+    margin-left: 2%;
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+    padding-bottom: 1.5% !important;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 0px;
+}
+
+.message.user {
+    background: var(--user-accent);
+    align-self: flex-end;
+    margin-top: -1%;
+    margin-right: 2%;
+    padding-left: 3% !important;
+    padding-right: 2% !important;
+    padding-bottom: 1% !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 20px;
+    /* color: var(--plain1-color); */
+}
+
+.chat-messages {
+    background: var(--plain1-color);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: var(--plain3-color);
+}
+
+/* === Input Section === */
+.input-field-box {
+    /* keep your header-bg variable for the container */
+    border-top: solid 1px var(--border-color) !important;
+    background-color: var(--header-bg) !important;
+}
+
+/* the text you type */
+#chatInput {
+    background: var(--chatinput);
+    border: None;
+    border-radius: 50px;
+    height: 6vh;
+    /* ← ensure the text itself flips */
+    color: var(--text-primary) !important;
+}
+
+.input-placeholder {
+    padding: 1.5% 0 2.25% 4% !important;
+    font-size: 1.25rem;
+    /* color: var(--text-secondary) !important; */
+    border: solid 1px var(--border-color);
+}
+
+/* the placeholder text */
+#chatInput::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* if you ever use .input-placeholder on other inputs */
+.input-placeholder::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+
+.send-icon-btn {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.send-icon-btn:hover i {
+    /* filter: var(--arrow-hover); */
+}
+
+.send-icon-btn:active i {
+    transform: scale(0.95);
+}
+
+/* ── History Toggle (light/dark) ── */
+#toggleHistory {
+    background: transparent;
+    /* border: 2px solid var(--border-color); */
+    color: var(--text-primary);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+#toggleHistory:hover {
+    background-color: var(--header-bg);
+    color: var(--text-primary);
+}
+
+/* Dark-mode overrides */
+body.dark-mode #toggleHistory {
+    /* border-color: var(--border-color2); */
+    color: var(--text-primary);
+}
+
+body.dark-mode #toggleHistory:hover {
+    background-color: var(--header-bg);
+    color: var(--text-primary);
+}
+
+
+/* === Responsive: Stack Panels on Small Screens === */
+/* @media (max-width: 767.98px) {
+
+    .chat-section,
+    .chat-bot-sec {
+        height: auto !important;
+    }
+
+    .chat-bot-sec .row {
+        flex-direction: column;
+    }
+
+    #chatHistoryPanel {
+        width: 100%;
+        max-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color2);
+        overflow-y: auto;
+    }
+
+    .chat-window-panel {
+        width: 100%;
+        flex: 1 1 auto;
+        height: auto;
+    }
+
+    .chat-messages {
+        position: relative;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .sec1 {
+        padding-top: 10%;
+    }
+} */
+
+/* Wider bubbles & smaller text on very small screens */
+/* @media (max-width: 575.98px) {
+    .message {
+        max-width: 80%;
+        font-size: 1rem;
+    }
+
+    .avatar {
+        width: 2rem;
+        height: 2rem;
+    }
+} */
+
+/* === Responsive: Stack Panels on Small Screens === */
+@media (max-width: 767.98px) {
+    .chat-section {
+        height: 75vh; /* Fixed vertical height for chatbot */
+    }
+
+    .chat-bot-sec {
+        height: auto;
+    }
+
+    .chat-bot-sec .row {
+        flex-direction: column;
+    }
+
+    .chat-history-panel {
+        width: 100%;
+        max-width: 100%;
+        max-height: 300px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color2);
+        overflow-y: auto;
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .chat-history-panel.collapsed {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-20px);
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .chat-window-panel {
+        width: 100%;
+        flex: 1 1 auto;
+        height: auto;
+    }
+
+    .chat-messages {
+        position: relative;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important; 
+    }
+
+    .sec1{
+        padding-top: 10%;
+    }
+
+    .chatbot-page-title{
+        font-size: 2.7rem;
+    }
+}
+
+/* Wider bubbles & smaller text on very small screens */
+@media (max-width: 575.98px) {
+    .message {
+        max-width: 80%;
+        font-size: 1rem;
+    }
+
+    .avatar {
+        width: 2rem;
+        height: 2rem;
+    }
+}

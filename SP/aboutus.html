@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="chatbot-style.css">
+    <link rel="stylesheet" href="medicalrecords-style.css">
+    <link rel="stylesheet" href="aboutus-style.css">
+
+    <!-- Font Awesome Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>About Us</title>
+
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-black fixed-top">
+        <div class="container">
+            <!-- Brand Name -->
+            <a class="navbar-brand" href="home.html"><img src="imgs/sehatpal - website logo - white.png" alt="SehatPal Logo"
+                    class="navbar-logo"></a>
+
+            <!-- Right-aligned Icons -->
+            <div class="d-flex align-items-center gap-0">
+                <!-- <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a> -->
+
+                <div class="user-info" style="display:none;">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
+                    
+                <!-- Hamburger Icon -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
+                    data-bs-target="#menuModal">
+                    <i class="bi bi-list text-white fs-3"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mode-toggle-fixed">
+        <input type="checkbox" id="modeToggle" />
+        <label for="modeToggle">
+          <span class="toggle-track">
+            <span class="icon day"><i class="bi bi-sun-fill"></i></span>
+            <span class="icon night"><i class="bi bi-moon-fill"></i></span>
+          </span>
+        </label>
+    </div>
+
+    <!-- Full-screen dark overlay -->
+    <div id="searchOverlay" class="search-overlay"></div>
+
+    <!-- Search Bar -->
+    <div id="searchBarContainer" class="search-bar-container">
+        <input type="text" id="searchBar" placeholder="Search SehatPal…">
+        <button id="searchSubmit" class="search-submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+    <!-- Modal (Menu) -->
+    <div class="modal fade" id="menuModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-black text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title">navigate sehatpal - menu</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="menu-item">
+                        <a href="home.html" class="nav-link">home</a>
+                        <span>——</span>
+                        <a href="chatbot.html" class="nav-link">sehatpal - chatbot</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="medical_records.html" class="nav-link">medical records</a>
+                        <span>——</span>
+                        <a href="#" class="nav-link">about us</a>
+                    </div>
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
+                        <a href="signin.html" class="nav-link">sign in/sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="aboutus-page">
+        <section class="about-us-sec container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div>
+                        <h1 class="aboutus-title animate">about us</h1>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="para-box text-center animate">
+                        <p class="aboutus-para animate">
+                            Sehatpal is a digital healthcare platform developed by a Karachi-based team, offering AI-powered symptom checks, real-time consultations with licensed professionals, and secure medical-record management.<br>Created by undergraduate students Syed Ukkashah (Backend Developer) and Ibrahim Johar (Front‑End Developer).<br>Our platform delivers seamless access to healthcare tools alongside expert-curated educational resources developed in collaboration with doctors, psychologists, and wellness coaches.<br>We prioritize user feedback and partner with local clinics to tailor services to diverse cultural and medical needs.<br>At Sehatpal, compassion, innovation, and reliability converge to ensure quality healthcare is accessible to everyone.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container py-4">
+            <div class="row align-items-start">
+
+                <!-- Socials -->
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <h5 class="footer-title">Socials</h5>
+                    <div class="social-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="mailto:info@sehatpal.org">
+                            <i class="fas fa-envelope"></i> info@sehatpal.org
+                        </a>
+                        <a href="#"><i class="fab fa-instagram"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-facebook"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-linkedin"></i> sehatpal</a>
+                    </div>
+                </div>
+
+                <!-- Legal -->
+                <div class="col-md-6 text-center text-md-start">
+                    <h5 class="footer-title">Legal</h5>
+                    <div class="legal-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="faq.html">FAQs</a>
+                        <a href="copyright.html">Copyright Policy</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col text-center mt-4 copyright">
+                    &copy; 2025 <span class="brand-name">sehatpal</span>, All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="medical_records.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeo5nv/R0QmRewsGkdQe1MctZV7Gregor/yRLMR1RTQ5zA=="
+        crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

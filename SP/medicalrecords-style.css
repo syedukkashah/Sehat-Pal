@@ -1,0 +1,608 @@
+/*-----------------------------------------
+  Theme Variables (light & dark)
+-----------------------------------------*/
+:root {
+    /* colors */
+    --bg-primary: #f0f3bd;
+    --bg-50-opacity: rgba(240, 243, 189, 0.5);
+    --bg-85-opacity: rgba(240, 243, 189, 0.85);
+    --plain1-color: #ffffff;
+    --plain2-color: #000000;
+    --purple-accent: #a96cff;
+    --text-primary: #000000;
+    --border-color: #000000;
+    --border-color2: #ffffff;
+    --form-preview: rgba(0, 0, 0, 0.7);
+    --med-box-overlay: rgba(169, 108, 255, 0.1);
+    --bg-footer: #f2e8ff;
+    --footer-font-color: #000000;
+
+    /* backgrounds */
+    --bg1: url('imgs/BG1-Light.png');
+
+    /* arrow filters (if needed elsewhere) */
+    --arrow-default: invert(0);
+    --arrow-hover: invert(1);
+}
+
+body.dark-mode {
+    --bg-primary: rgba(0, 0, 0, 0.5);
+    --plain1-color: #000000;
+    --plain2-color: #ffffff;
+    --text-primary: #ffffff;
+    --purple-accent: #a96cff;
+    --border-color: #ffffff;
+    --border-color2: #000000;
+    --form-preview: rgba(255, 255, 255, 0.7);
+    --med-box-overlay: rgba(0, 0, 0, 0.2);
+    --bg-footer: #2a104b;
+    --footer-font-color: #ffffff;
+
+    /* dark backgrounds */
+    --bg1: url('imgs/BG1-Dark.png');
+    
+    --arrow-default: invert(1);
+    --arrow-hover: invert(0);
+}
+
+/*-----------------------------------------
+  1) Page-level background & section styling
+-----------------------------------------*/
+.s1 {
+    position: relative;
+    background: var(--bg1) center/cover no-repeat;
+    overflow: hidden;
+    margin-bottom: 0%;
+    z-index: 1;
+}
+
+.s1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    opacity: 0.25;
+    z-index: 2;
+}
+
+.s1>* {
+    position: relative;
+    z-index: 3;
+}
+
+/*-----------------------------------------
+    2) Two-column grid of info-boxes
+-----------------------------------------*/
+.s1 .info-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 3rem;
+    /* row-gap 2rem, col-gap 3rem */
+    margin-top: 2rem;
+    margin-bottom: 10rem;
+}
+
+@media (max-width: 767.98px) {
+    .s1 .info-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*-----------------------------------------
+    3) Information Box Container
+-----------------------------------------*/
+.information-box {
+    position: relative;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    padding-bottom: 3rem;
+    /* space for footer */
+    margin-top: 2rem;
+    background-color: var(--bg-50-opacity);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/*-----------------------------------------
+    4) Header (title + edit button + underline)
+-----------------------------------------*/
+.information-box .info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* BLEED the header to touch the box's edges */
+    margin: 0 -1.5rem 1rem;
+    /* pull left/right past the 1.5rem box padding */
+    padding: 0 1.5rem 1.5rem;
+    /* re-add that 1.5rem gutter, plus bottom padding */
+
+    border-bottom: 1px solid var(--border-color);
+}
+
+.information-box .info-header h2 {
+    margin: 0;
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+}
+
+.information-box .edit-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+/*-----------------------------------------
+    5) Two-column grid for labels & inputs
+-----------------------------------------*/
+.information-box .info-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    row-gap: 1rem;
+    align-items: center;
+}
+
+/*-----------------------------------------
+    6) Label styling
+-----------------------------------------*/
+.information-box .info-grid .label {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+/*-----------------------------------------
+    7) Input styling
+-----------------------------------------*/
+.information-box .info-input {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-color);
+    background: var(--plain1-color);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.information-box .info-input[readonly] {
+    background: transparent;
+    border-color: var(--border-color);
+}
+
+/*-----------------------------------------
+    8) Footer (last-updated timestamp)
+-----------------------------------------*/
+.information-box .info-footer {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.information-box:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/*-----------------------------------------
+    9) Medical Records Styles
+-----------------------------------------*/
+
+.medicalrec-title2{
+    font-size: 3rem;
+    font-family: 'Thunder LC', sans-serif;
+    color: var(--plain2-color);
+}
+
+@media(max-width: 767.9px){
+    .medicalrec-title2{
+        font-size: 2rem;
+    }
+
+    .custom-btn-3{
+        transform: scale(0.8);
+    }
+}
+
+.custom-btn-3 {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 1.65rem;
+    background-color: var(--plain1-color);
+    color: var(--plain2-color);
+    border-radius: 0;
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+    padding-right: 3.5%;
+    padding-left: 3.5%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    font-weight: 500;
+}
+
+.custom-btn-3:hover {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 1.65rem;
+    background-color: var(--plain2-color);
+    color: var(--plain1-color);
+    border-radius: 0;
+    border: 1px solid var(--border-color2);
+}
+
+.custom-btn-3:active,
+.custom-btn-3:focus {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 1.65rem;
+    background-color: rgb(218, 218, 218);
+    color: var(--plain2-color);
+    border-radius: 0;
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+@media(max-width: 767.9px){
+    .custom-btn-3{
+        width: 40%;
+        font-size: 1.85rem;
+    }
+}
+
+/* Cards for medical records */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    background-color: var(--bg-50-opacity);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 2rem;
+}
+
+.card-subtitle {
+    color: var(--text-primary) !important;
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 1.5rem;
+}
+
+.card-text {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.view-details-btn,
+.edit-record-btn {
+    border-radius: 0px;
+    border: solid 1px;
+    border-color: var(--border-color);
+    color: var(--plain2-color);
+    font-size: 1.1rem;
+    background-color: var(--plain1-color);
+    transition: all 0.2s ease;
+    padding-bottom: 2%;
+    padding-top: 1%;
+    padding-right: 2.5%;
+    padding-left: 2.5%;
+}
+
+.view-details-btn:hover,
+.edit-record-btn:hover {
+    background-color: var(--plain2-color);      /* swap bg and text color */
+    color: var(--plain1-color);                 /* so text is visible */
+    border-color: var(--border-color2);
+}
+
+.view-details-btn:focus,
+.view-details-btn:active,
+.edit-record-btn:focus,
+.edit-record-btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: var(--plain2-color) !important; /* maintain hover bg */
+    color: var(--plain1-color) !important;            /* maintain hover text */
+    border-color: var(--border-color2) !important;    /* match hover border */
+}
+
+/* No records message */
+#no-records-message {
+    color: var(--text-primary);
+    padding: 2rem;
+}
+
+.no-records-box {
+    background-color: var(--bg-50-opacity);
+    border: 1px dashed var(--border-color);
+    padding: 3rem 2rem;
+    border-radius: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.no-records-box h3 {
+    font-family: 'Thunder LC', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.no-records-box p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.no-records-box p:last-child {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Modal styles */
+.modal2-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal2-overlay.hidden {
+    display: none;
+}
+
+.modal2-content {
+    margin-top: 5%;
+    width: 90%;
+    height: 80vh;
+    max-width: 700px;
+    /* max-height: 90vh; */
+    background-color: white;
+    color: black;
+    border-radius: 0px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal2-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+}
+
+.modal2-header h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.modal2-body {
+    font-family: 'Darker Grotesque', sans-serif;
+    color: black;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.modal2-body .form-control {
+    border: 1px solid black; /* or your custom theme color */
+    box-shadow: none;
+    border-radius: 0px;
+    color: black;
+}
+
+.modal2-content {
+    border: none;
+}
+
+/* Record form styles */
+#add-record-form label {
+    font-weight: 600;
+    /* color: var(--text-primary); */
+}
+
+/* Record details styles */
+.record-detail-item {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #494444;
+    padding-bottom: 1rem;
+}
+
+.record-detail-item:last-child {
+    border-bottom: none;
+}
+
+.record-detail-item h4 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: black;
+    margin-bottom: 0.5rem;
+}
+
+.record-detail-item p {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.record-detail-item li {
+    font-size: 1.25rem;
+}
+
+#record-type {
+    border-radius: 0;
+    border: solid 1px black;
+    -webkit-appearance: none;  /* Remove default styling on Safari/Chrome */
+    -moz-appearance: none;     /* Remove default styling on Firefox */
+    appearance: none;          /* Standard */
+}
+
+.form-select {
+    border-radius: 0 !important;
+}
+
+#record-type:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Critical range indicators */
+.critical-high {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.critical-low {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.normal-range {
+    color: #198754;
+    font-weight: 600;
+}
+
+/* Validation messages */
+.validation-message {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.validation-message.error {
+    color: #dc3545;
+}
+
+.validation-message.warning {
+    color: #ffc107;
+}
+
+.validation-message.success {
+    color: #198754;
+}
+
+/* Optional field indicator */
+.optional-field::after {
+    content: " (optional)";
+    color: #6c757d;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+
+/* Color Key Styles */
+.color-key-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+    border-radius: 0;
+    margin-bottom: 1.5rem;
+}
+
+.color-key-title {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #212529;
+    font-weight: 600;
+}
+
+.color-key-items {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.color-key-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #495057;
+}
+
+.color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.color-dot.normal-range {
+    background-color: #198754;
+}
+
+.color-dot.critical-high {
+    background-color: #dc3545;
+}
+
+.color-dot.critical-low {
+    background-color: #ffc107;
+}
+
+@media (max-width: 767.98px) {
+    .color-key-items {
+        gap: 1rem;
+    }
+    
+    .color-key-item {
+        font-size: 0.9rem;
+    }
+}
+
+/* Condition Labels */
+.condition-label {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+}
+
+.critical-high .condition-label {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.critical-low .condition-label {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
+}
+
+.normal-range .condition-label {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}

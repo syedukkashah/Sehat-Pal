@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="chatbot-style.css">
+    <link rel="stylesheet" href="medicalrecords-style.css">
+
+    <!-- Font Awesome Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Your Medical Records</title>
+    
+    
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-black fixed-top">
+        <div class="container">
+            <!-- Brand Name -->
+            <a class="navbar-brand" href="home.html"><img src="imgs/sehatpal - website logo - white.png" alt="SehatPal Logo"
+                    class="navbar-logo"></a>
+
+            <!-- Right-aligned Icons -->
+            <div class="d-flex align-items-center gap-0">
+                <!-- <a href="#" id="searchIcon" class="nav-link text-white"><i class="bi bi-search"></i></a> -->
+
+                <div class="user-info">
+                    <span id="user-name" class="text-white"></span>
+                    <button id="logout-btn" class="btn btn-sm btn-outline-light ms-2">Logout</button>
+                </div>
+                
+                <!-- Hamburger Icon -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal"
+                    data-bs-target="#menuModal">
+                    <i class="bi bi-list text-white fs-3"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mode-toggle-fixed">
+        <input type="checkbox" id="modeToggle" />
+        <label for="modeToggle">
+          <span class="toggle-track">
+            <span class="icon day"><i class="bi bi-sun-fill"></i></span>
+            <span class="icon night"><i class="bi bi-moon-fill"></i></span>
+          </span>
+        </label>
+    </div>
+
+    <!-- Full-screen dark overlay -->
+    <div id="searchOverlay" class="search-overlay"></div>
+
+    <!-- Search Bar -->
+    <div id="searchBarContainer" class="search-bar-container">
+        <input type="text" id="searchBar" placeholder="Search SehatPal…">
+        <button id="searchSubmit" class="search-submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+    <!-- Modal (Menu) -->
+    <div class="modal fade" id="menuModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-black text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title">navigate sehatpal - menu</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="menu-item">
+                        <a href="home.html" class="nav-link">home</a>
+                        <span>——</span>
+                        <a href="chatbot.html" class="nav-link">sehatpal - chatbot</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="medical_records.html" class="nav-link">medical records</a>
+                        <span>——</span>
+                        <a href="aboutus.html" class="nav-link">about us</a>
+                    </div>
+                    <div class="menu-item auth-link" data-auth-state="signed-out">
+                        <a href="signin.html" class="nav-link">sign in/sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="sec1">
+        <section class="container chatbot-title-section">
+            <h3 class="text-center chatbot-page-title animate">welcome to your medical records.</h3>
+        </section>
+    </section>
+
+    <!-- Medical Records Dashboard Section -->
+    <section class="s1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-4 mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="medicalrec-title2">View Your Medical Records</h2>
+                        <button id="add-record-btn" class="custom-btn-3">add new record</button>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div id="records-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+                        <!-- Records will be added here dynamically -->
+                    </div>
+                    <div id="no-records-message" class="text-center py-5 mt-2 mb-4 hidden">
+                        <p class="lead">You don't have any medical records yet.</p>
+                        <p>Click the "Add New Record" button to create your first record.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Add Record Modal -->
+        <div id="add-record-modal" class="modal2-overlay hidden">
+            <div class="modal2-content">
+                <div class="modal2-header">
+                    <h2>Add Medical Record</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal2-body">
+                    <form id="add-record-form">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="record-type">Record Type*</label>
+                                <select id="record-type" class="form-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="General Checkup">General Checkup</option>
+                                    <option value="Specialist Visit">Specialist Visit</option>
+                                    <option value="Lab Test">Lab Test</option>
+                                    <option value="Vaccination">Vaccination</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="record-date">Date*</label>
+                                <input type="date" id="record-date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="blood-pressure">Blood Pressure (mmHg)</label>
+                                <input type="text" id="blood-pressure" class="form-control" placeholder="e.g., 120/80">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="heart-rate">Heart Rate (bpm)</label>
+                                <input type="number" id="heart-rate" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="temperature">Temperature (°F)</label>
+                                <input type="number" id="temperature" class="form-control" step="0.1">
+                                <div id="temperature-validation" class="validation-message"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="weight" class="form-label">Weight (kg)</label>
+                                <input type="number" step="0.1" class="form-control" id="weight" placeholder="Enter weight">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hba1c" class="form-label optional-field">HBA1C Level (%)</label>
+                            <input type="number" step="0.1" min="5" max="15" class="form-control" id="hba1c" placeholder="Enter HBA1C level (5-15%)">
+                            <div id="hba1c-validation" class="validation-message"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cholesterol" class="form-label optional-field">Cholesterol Level (mg/dL)</label>
+                            <input type="number" min="9" max="700" class="form-control" id="cholesterol" placeholder="Enter cholesterol level (9-700 mg/dL)">
+                            <div id="cholesterol-validation" class="validation-message"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="blood-sugar" class="form-label">Blood Sugar Level (mg/dL) <span class="optional-field">(optional)</span></label>
+                            <input type="number" min="70" max="600" class="form-control" id="blood-sugar" placeholder="Enter blood sugar level (70-600 mg/dL)">
+                            <div id="blood-sugar-validation" class="validation-message"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="symptoms">Symptoms</label>
+                            <textarea id="symptoms" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="diagnosis">Diagnosis</label>
+                            <textarea id="diagnosis" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="medications" class="form-label optional-field">Medications (one per line)</label>
+                            <textarea id="medications" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="doctor-name">Doctor Name</label>
+                                <input type="text" id="doctor-name" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="facility">Healthcare Facility</label>
+                                <input type="text" id="facility" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes">Additional Notes</label>
+                            <textarea id="notes" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="view-details-btn">Save Record</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Record Details Modal -->
+    <div id="record-details-modal" class="modal2-overlay hidden">
+        <div class="modal2-content">
+            <div class="modal2-header">
+                <h2>Medical Record Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal2-body">
+                <div class="color-key-container mb-4">
+                    <h4 class="color-key-title">Color Guide</h4>
+                    <div class="color-key-items">
+                        <div class="color-key-item">
+                            <span class="color-dot normal-range"></span>
+                            <span>Normal Range</span>
+                        </div>
+                        <div class="color-key-item">
+                            <span class="color-dot critical-high"></span>
+                            <span>Critical High</span>
+                        </div>
+                        <div class="color-key-item">
+                            <span class="color-dot critical-low"></span>
+                            <span>Critical Low</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="record-details-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container py-4">
+            <div class="row align-items-start">
+
+                <!-- Socials -->
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <h5 class="footer-title">Socials</h5>
+                    <div class="social-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="mailto:info@sehatpal.org">
+                            <i class="fas fa-envelope"></i> info@sehatpal.org
+                        </a>
+                        <a href="#"><i class="fab fa-instagram"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-facebook"></i> sehatpal</a>
+                        <a href="#"><i class="fab fa-linkedin"></i> sehatpal</a>
+                    </div>
+                </div>
+
+                <!-- Legal -->
+                <div class="col-md-6 text-center text-md-start">
+                    <h5 class="footer-title">Legal</h5>
+                    <div class="legal-links d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Copyright Policy</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col text-center mt-4 copyright">
+                    &copy; 2025 <span class="brand-name">sehatpal</span>, All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase JS -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="records.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
