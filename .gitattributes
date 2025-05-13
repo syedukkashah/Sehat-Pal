@@ -1,7 +1,0 @@
-# Keep all SVG files stored with LF endings in the repo
-*.svg text eol=lf
-
-# (Optional) Normalize all text files:  
-#  - store as LF in repo  
-#  - convert to CRLF on checkout if on Windows  
-* text=auto
